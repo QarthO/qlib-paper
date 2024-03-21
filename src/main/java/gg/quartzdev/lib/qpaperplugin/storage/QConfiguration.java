@@ -1,8 +1,8 @@
-package gg.quartzdev.qtemplateplugin.storage;
+package gg.quartzdev.lib.qpaperplugin.storage;
 
-import gg.quartzdev.qtemplateplugin.util.Messages;
-import gg.quartzdev.qtemplateplugin.util.QLogger;
-import gg.quartzdev.qtemplateplugin.util.QPlugin;
+import gg.quartzdev.lib.qpaperplugin.util.Messages;
+import gg.quartzdev.lib.qpaperplugin.util.QLogger;
+import gg.quartzdev.qpaperplugin.util.QPaperPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -28,7 +28,7 @@ public abstract class QConfiguration {
         this.fileName = fileName;
         String fileSeparator = System.getProperty("file.separator");
         filePath =
-                QPlugin.getPlugin().getDataFolder() +
+                QPaperPlugin.getPlugin().getDataFolder() +
                 fileSeparator +
                 fileName.replaceAll("/", fileSeparator);
         loadFile();
@@ -38,7 +38,7 @@ public abstract class QConfiguration {
         file = new File(filePath);
         try {
             if (file.createNewFile()) {
-                QPlugin.getPlugin().saveResource(fileName, true);
+                QPaperPlugin.getPlugin().saveResource(fileName, true);
                 QLogger.info(Messages.FILE_CREATED.parse("file", fileName));
             }
 
@@ -54,7 +54,7 @@ public abstract class QConfiguration {
     }
     public void stampFile(double schemaVersion){
         List<String> notes = new ArrayList<>();
-        notes.add("Last loaded with " + QPlugin.getName() + " v" + QPlugin.getVersion());
+        notes.add("Last loaded with " + QPaperPlugin.getName() + " v" + QPaperPlugin.getVersion());
         yamlConfiguration.setComments("schema-version", notes);
         save();
     }

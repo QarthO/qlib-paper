@@ -1,4 +1,4 @@
-package gg.quartzdev.qtemplateplugin.storage;
+package gg.quartzdev.lib.qpaperplugin.storage;
 
 import org.bukkit.World;
 

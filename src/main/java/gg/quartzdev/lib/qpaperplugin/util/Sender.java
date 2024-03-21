@@ -1,6 +1,5 @@
-package gg.quartzdev.qtemplateplugin.util;
+package gg.quartzdev.lib.qpaperplugin.util;
 
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -8,6 +7,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class Sender {
+
+    /**
+     * Sends a message to the player in chat
+     * @param sender the {@link CommandSender} to send the message to
+     * @param message the message as a {@link String} to send supporting MiniMessage formatting
+     */
     public static void message(CommandSender sender, String message){
         if(sender instanceof Player)
             sender.sendMessage(parse(message, false));
@@ -19,7 +24,7 @@ public class Sender {
     /**
      * Sends a Message to the player in chat
      * @param sender the {@link CommandSender} to send the message to
-     * @param message the {@link Messages} to send
+     * @param message the {@link Messages} to send supporting MiniMessage formatting
      */
     public static void message(CommandSender sender, Messages message){
         message(sender, message.get());
@@ -48,10 +53,19 @@ public class Sender {
     /**
      * Sends an action bar to a player
      * @param player the player to send the actionbar to
-     * @param message the message to send
+     * @param message the message to send supporting MiniMessage formatting
      */
     public static void actionBar(Player player, String message){
         player.sendActionBar(parse(message, false));
+    }
+
+    /**
+     * Sends an action bar to a player
+     * @param player the player to send the actionbar to
+     * @param message the {@link Messages} to send supporting MiniMessage formatting
+     */
+    public static void actionBar(Player player, Messages message){
+        player.sendActionBar(parse(message.get(), false));
     }
 
     /**
