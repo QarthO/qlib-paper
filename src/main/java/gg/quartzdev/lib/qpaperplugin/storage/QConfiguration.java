@@ -2,7 +2,7 @@ package gg.quartzdev.lib.qpaperplugin.storage;
 
 import gg.quartzdev.lib.qpaperplugin.util.Messages;
 import gg.quartzdev.lib.qpaperplugin.util.QLogger;
-import gg.quartzdev.qpaperplugin.util.QPaperPlugin;
+import gg.quartzdev.lib.qpaperplugin.util.QPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -20,7 +20,7 @@ public abstract class QConfiguration {
     private final String fileName;
     private final String filePath;
     private double schemaVersion = 1.0;
-    private double minSupportedScema = 1.0;
+    private final double minSupportedScema = 1.0;
     private File file;
     protected YamlConfiguration yamlConfiguration;
 
@@ -28,7 +28,7 @@ public abstract class QConfiguration {
         this.fileName = fileName;
         String fileSeparator = System.getProperty("file.separator");
         filePath =
-                QPaperPlugin.getPlugin().getDataFolder() +
+                QPlugin.getPlugin().getDataFolder() +
                 fileSeparator +
                 fileName.replaceAll("/", fileSeparator);
         loadFile();
@@ -38,7 +38,7 @@ public abstract class QConfiguration {
         file = new File(filePath);
         try {
             if (file.createNewFile()) {
-                QPaperPlugin.getPlugin().saveResource(fileName, true);
+                QPlugin.getPlugin().saveResource(fileName, true);
                 QLogger.info(Messages.FILE_CREATED.parse("file", fileName));
             }
 
@@ -46,15 +46,15 @@ public abstract class QConfiguration {
             if(!validateSchema()){
                 QLogger.info("Unsupported Config Schema... Reset your config");
             }
-            stampFile(this.schemaVersion);
+            stampFile();
         } catch (IOException exception) {
             QLogger.error(Messages.ERROR_CREATE_FILE.parse("file", fileName));
             QLogger.error(exception.getMessage());
         }
     }
-    public void stampFile(double schemaVersion){
+    public void stampFile(){
         List<String> notes = new ArrayList<>();
-        notes.add("Last loaded with " + QPaperPlugin.getName() + " v" + QPaperPlugin.getVersion());
+        notes.add("Last loaded with " + QPlugin.getName() + " v" + QPlugin.getVersion());
         yamlConfiguration.setComments("schema-version", notes);
         save();
     }

@@ -16,13 +16,14 @@ import java.util.List;
 public class CommandManager extends Command {
 
     HashMap<String, QCommand> subCommands;
-
-    public CommandManager(String name, @NotNull List<String> aliases, @NotNull HashMap<String, QCommand> subCommands){
+    public CommandManager(String name, @NotNull List<String> aliases){
         super(name);
         super.setAliases(aliases);
-        this.subCommands = subCommands;
-
         Bukkit.getCommandMap().register(name, this);
+    }
+
+    public void add(String subCommandLabel, QCommand subCommand){
+
     }
 
     @Override
@@ -71,3 +72,4 @@ public class CommandManager extends Command {
 
 
 }
+
