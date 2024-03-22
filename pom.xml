@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>gg.quartzdev</groupId>
-    <artifactId>qTemplatePlugin</artifactId>
-    <version>1.0-BETA</version>
+    <artifactId>qPaperPlugin</artifactId>
+    <version>0.1.0-BETA</version>
     <packaging>jar</packaging>
 
-    <name>qTemplatePlugin</name>
+    <name>qPaperPlugin</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -27,40 +27,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <createDependencyReducedPom>false</createDependencyReducedPom>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.3.1</version>
-                <configuration>
-                    <!--                    Mac-->
-<!--                    <outputDirectory>/Users/derek/Minecraft/Server/Local Dev Server/plugins/update</outputDirectory>-->
-                    <!--                    Windows-->
-<!--                    <outputDirectory>C:\Users\derek\Documents\Minecraft\Server\Pufferfish 1.20.4\plugins\update</outputDirectory>-->
-                </configuration>
-            </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
     </build>
 
     <repositories>
@@ -73,7 +40,6 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
-
     <dependencies>
         <dependency>
             <groupId>io.papermc.paper</groupId>
@@ -87,6 +53,5 @@
             <version>3.0.2</version>
             <scope>compile</scope>
         </dependency>
-
     </dependencies>
 </project>
