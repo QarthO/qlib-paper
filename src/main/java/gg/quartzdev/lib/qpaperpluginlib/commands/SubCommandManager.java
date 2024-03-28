@@ -1,7 +1,7 @@
-package gg.quartzdev.lib.qpaperplugin.commands;
+package gg.quartzdev.lib.qpaperpluginlib.commands;
 
-import gg.quartzdev.lib.qpaperplugin.util.Messages;
-import gg.quartzdev.lib.qpaperplugin.util.Sender;
+import gg.quartzdev.lib.qpaperpluginlib.util.QPlugin;
+import gg.quartzdev.lib.qpaperpluginlib.util.Sender;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,17 +13,17 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class CommandManager extends Command {
+public class SubCommandManager extends Command {
 
     HashMap<String, QCommand> subCommands;
-    public CommandManager(String name, @NotNull List<String> aliases){
+    public SubCommandManager(String name, @NotNull List<String> aliases){
         super(name);
         super.setAliases(aliases);
         Bukkit.getCommandMap().register(name, this);
     }
 
-    public void add(String subCommandLabel, QCommand subCommand){
-
+    public void add(String label, QCommand subCommand){
+        subCommands.put(label, subCommand);
     }
 
     @Override
@@ -33,11 +33,11 @@ public class CommandManager extends Command {
             return subCommands.get("").run(sender, labelOrAlias, args);
         }
 
-//        Get subcommand from the label
+//        Get subcommand from args
         QCommand cmd = subCommands.get(args[0]);
 
         if(cmd == null){
-            Sender.message(sender, Messages.ERROR_CMD_NOT_FOUND.parse("cmd", args[0]));
+            Sender.message(sender, QPlugin.genericMessages.get("ERROR_CMD_NOT_FOUND").parse("cmd", args[0]));
             return false;
         }
 

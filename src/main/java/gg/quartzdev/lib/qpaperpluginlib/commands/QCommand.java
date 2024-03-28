@@ -1,8 +1,8 @@
-package gg.quartzdev.lib.qpaperplugin.commands;
+package gg.quartzdev.lib.qpaperpluginlib.commands;
 
-import gg.quartzdev.lib.qpaperplugin.util.Messages;
-import gg.quartzdev.lib.qpaperplugin.util.QPerm;
-import gg.quartzdev.lib.qpaperplugin.util.Sender;
+import gg.quartzdev.lib.qpaperpluginlib.util.QPerm;
+import gg.quartzdev.lib.qpaperpluginlib.util.QPlugin;
+import gg.quartzdev.lib.qpaperpluginlib.util.Sender;
 import org.bukkit.command.CommandSender;
 
 public abstract class QCommand {
@@ -23,7 +23,7 @@ public abstract class QCommand {
     public boolean run(CommandSender sender, String label, String[] args){
         //        checks permission
         if(!this.hasPermission(sender)){
-            Sender.message(sender, Messages.ERROR_NO_PERMISSION);
+            Sender.message(sender, QPlugin.genericMessages.get("ERROR_NO_PERMISSION"));
             return false;
         }
 //        runs command

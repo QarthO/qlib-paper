@@ -1,6 +1,7 @@
-package gg.quartzdev.lib.qpaperplugin.util;
+package gg.quartzdev.lib.qpaperpluginlib.util;
 
-import gg.quartzdev.lib.qpaperplugin.storage.Config;
+import gg.quartzdev.lib.qpaperpluginlib.commands.QCommandMap;
+import gg.quartzdev.lib.qpaperpluginlib.messages.QMessagesManager;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,22 +10,24 @@ public class QPlugin {
 
     public static QPlugin instance;
     private static JavaPlugin javaPlugin;
-    private static Config config;
     private boolean selfDisabled = false;
     private QCommandMap commandMap;
+
+    public static QMessagesManager genericMessages;
+    public static QMessagesManager pluginMessages;
 
     public static JavaPlugin getPlugin(){
         return javaPlugin;
     }
 
-    public static Config getConfig(){
-        return config;
-    }
+//    public static Config getConfig(){
+//        return config;
+//    }
 
-    private QPlugin(JavaPlugin plugin, boolean useConfig, int bStatsPluginId){
+    private QPlugin(JavaPlugin plugin, int bStatsPluginId, boolean config){
         javaPlugin = plugin;
 
-        if(useConfig){
+        if(config){
             setupPluginConfig();
         }
 
@@ -36,12 +39,12 @@ public class QPlugin {
         registerListeners();
     }
 
-    public static void enable(JavaPlugin plugin, boolean useConfig, int bStatsPluginId){
+    public static void enable(JavaPlugin plugin, int bStatsPluginId, boolean useConfig){
         if(instance != null){
-            QLogger.error(Messages.ERROR_PLUGIN_ENABLE);
+            QLogger.error(genericMessages.get("ERROR_PLUGIN_ENABLE"));
             return;
         }
-        instance = new QPlugin(plugin, useConfig, bStatsPluginId);
+        instance = new QPlugin(plugin, bStatsPluginId,  useConfig);
     }
 
     public static void disable(boolean selfDisabled){
@@ -52,13 +55,12 @@ public class QPlugin {
 //        Warns about reloading
         final boolean isStopping = Bukkit.getServer().isStopping();
         if(!isStopping && !instance.selfDisabled){
-            QLogger.warning(Messages.PLUGIN_UNSAFE_DISABLE);
+            genericMessages.get("PLUGIN_UNSAFE_DISABLE");
         }
-
-        QLogger.info(Messages.PLUGIN_DISABLE);
+        genericMessages.get("PLUGIN_DISABLE");
         instance = null;
         javaPlugin = null;
-        config = null;
+//        config = null;
 
 //        Put logic to stop any async tasks
     }
@@ -80,13 +82,12 @@ public class QPlugin {
         try{
             javaPlugin.getDataFolder().mkdirs();
         } catch(SecurityException exception){
-            QLogger.error(Messages.ERROR_CREATE_FILE.parse("file", "Plugin Data Folder"));
+            QLogger.error(genericMessages.get("ERROR_CREATE_FILE").parse("file", "Plugin Data Folder"));
         }
     }
 
     public void setupPluginConfig(){
         createDataFolder();
-        config = new Config("config.yml");
     }
 
     public void registerCommands(){

@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>gg.quartzdev</groupId>
-    <artifactId>qPaperPlugin</artifactId>
+    <artifactId>qlib-paper</artifactId>
     <version>0.1.0-BETA</version>
     <packaging>jar</packaging>
 
-    <name>qPaperPlugin</name>
+    <name>qlib-paper</name>
 
     <properties>
         <java.version>17</java.version>
@@ -40,6 +40,7 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
+
     <dependencies>
         <dependency>
             <groupId>io.papermc.paper</groupId>

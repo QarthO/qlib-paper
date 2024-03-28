@@ -1,11 +1,11 @@
-package gg.quartzdev.lib.qpaperplugin.storage;
+package gg.quartzdev.lib.qpaperpluginlib.storage;
 
-import gg.quartzdev.lib.qpaperplugin.util.Messages;
-import gg.quartzdev.lib.qpaperplugin.util.QLogger;
-import gg.quartzdev.lib.qpaperplugin.util.QPlugin;
+import gg.quartzdev.lib.qpaperpluginlib.util.QLogger;
+import gg.quartzdev.lib.qpaperpluginlib.util.QPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class QConfiguration {
     private final String fileName;
@@ -39,7 +40,7 @@ public abstract class QConfiguration {
         try {
             if (file.createNewFile()) {
                 QPlugin.getPlugin().saveResource(fileName, true);
-                QLogger.info(Messages.FILE_CREATED.parse("file", fileName));
+                QLogger.info(QPlugin.genericMessages.get("FILE_CREATED").parse("file", fileName));
             }
 
             yamlConfiguration = YamlConfiguration.loadConfiguration(file);
@@ -48,7 +49,7 @@ public abstract class QConfiguration {
             }
             stampFile();
         } catch (IOException exception) {
-            QLogger.error(Messages.ERROR_CREATE_FILE.parse("file", fileName));
+            QLogger.error(QPlugin.genericMessages.get("ERROR_CREATE_FILE").parse("file", fileName));
             QLogger.error(exception.getMessage());
         }
     }
@@ -69,10 +70,11 @@ public abstract class QConfiguration {
     }
 
     public void save(){
+        saveAllData();
         try {
             yamlConfiguration.save(file);
         } catch(IOException exception){
-            QLogger.error(Messages.ERROR_SAVE_FILE.parse("file", filePath));
+            QLogger.error(QPlugin.genericMessages.get("ERROR_SAVE_FILE").parse("file", filePath));
         }
     }
 
@@ -81,8 +83,8 @@ public abstract class QConfiguration {
         loadAllData();
     }
 
-    abstract void loadAllData();
-    abstract void saveAllData();
+    public abstract void loadAllData();
+    public abstract void saveAllData();
 
     public void loadSchemaVersion(){
         this.schemaVersion = getNumber("schema-version").doubleValue();
@@ -191,5 +193,14 @@ public abstract class QConfiguration {
             }
         }
         return worlds;
+    }
+
+    /**
+     * Gets a map of the base section containing all keys and values. Does the same as #getValues on {@link ConfigurationSection}
+     * @param deep Whether to get a deep list, as opposed to a shallow list.
+     * @return Map of keys and values of this section.
+     */
+    public Map<String, Object> getValues(boolean deep){
+        return yamlConfiguration.getValues(deep);
     }
 }
