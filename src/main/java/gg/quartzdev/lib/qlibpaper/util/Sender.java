@@ -1,6 +1,8 @@
 package gg.quartzdev.lib.qlibpaper.util;
 
+import gg.quartzdev.lib.qlibpaper.messages.GenericMessages;
 import gg.quartzdev.lib.qlibpaper.messages.QMessage;
+import gg.quartzdev.lib.qlibpaper.messages.QPlaceholder;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -95,7 +97,7 @@ public class Sender {
      */
     public static void broadcast(Sound sound){
         Audience.audience(Bukkit.getOnlinePlayers()).playSound(sound);
-        message(Bukkit.getConsoleSender(), QPlugin.genericMessages.get("LOG_BROADCAST_SOUND").parse("sound", sound.examinableName()));
+        GenericMessages.LOG_BROADCAST_SOUND.parse(QPlaceholder.SOUND, sound.examinableName());
     }
 
     /**

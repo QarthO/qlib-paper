@@ -1,6 +1,7 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
-import gg.quartzdev.lib.qlibpaper.util.QPlugin;
+import gg.quartzdev.lib.qlibpaper.messages.GenericMessages;
+import gg.quartzdev.lib.qlibpaper.messages.QPlaceholder;
 import gg.quartzdev.lib.qlibpaper.util.Sender;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -37,7 +38,7 @@ public class SubCommandManager extends Command {
         QCommand cmd = subCommands.get(args[0]);
 
         if(cmd == null){
-            Sender.message(sender, QPlugin.genericMessages.get("ERROR_CMD_NOT_FOUND").parse("cmd", args[0]));
+            Sender.message(sender, GenericMessages.ERROR_COMMAND_NOT_FOUND.parse(QPlaceholder.COMMAND, args[0]));
             return false;
         }
 

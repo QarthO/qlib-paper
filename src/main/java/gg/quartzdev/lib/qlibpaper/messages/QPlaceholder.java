@@ -9,27 +9,16 @@ public enum QPlaceholder {
 
     FILE,
     WORLD,
-    PLAYER_NAME;
+    PLAYER_NAME,
+    COMMAND,
+    SOUND;
 
     public String get(){
         return "<" + this.name().toLowerCase() + ">";
     }
-
     @Override
     public String toString(){
         return get();
-    }
-
-    public String file(File file){
-        return file.isDirectory() ? file.getName() + " Directory" : file.getName();
-    }
-
-    public String world(World world){
-        return world.getName();
-    }
-
-    public String player(Player player){
-        return player.getName();
     }
 
 }

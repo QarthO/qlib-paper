@@ -1,8 +1,8 @@
 package gg.quartzdev.lib.qlibpaper.storage;
 
 import gg.quartzdev.lib.qlibpaper.messages.GenericMessages;
+import gg.quartzdev.lib.qlibpaper.messages.QPlaceholder;
 import gg.quartzdev.lib.qlibpaper.util.QLogger;
-import gg.quartzdev.lib.qlibpaper.util.QPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -12,7 +12,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,7 +90,7 @@ public abstract class QConfiguration {
         try {
             yamlConfiguration.save(file);
         } catch(IOException exception){
-            QLogger.error(QPlugin.genericMessages.get("ERROR_SAVE_FILE").parse("file", filePath));
+            QLogger.error(GenericMessages.ERROR_SAVE_FILE.parse(QPlaceholder.FILE, filePath));
         }
     }
 

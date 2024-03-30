@@ -18,5 +18,6 @@ public class GenericMessages {
     public static final QMessage ERROR_CREATE_FILE = new QMessage("<prefix> <green>Created file: <yellow><file>");
     public static final QMessage ERROR_SAVE_FILE = new QMessage("<prefix> <green>Created file: <yellow><file>");
     public static final QMessage ERROR_CORRUPT_FILE = new QMessage("<prefix> <green>Created file: <yellow><file>");
-
+    public static final QMessage LOG_BROADCAST_SOUND = new QMessage("<prefix> <blue>Broadcasting a sound to all players: <sound>");
+    public static final QMessage ERROR_COMMAND_NOT_FOUND = new QMessage("<prefix> <red>Error: Command not found: <yellow><command>");
 }
