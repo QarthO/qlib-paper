@@ -7,6 +7,7 @@ public class QMessage {
 
     public QMessage(String message){
         this.message = message;
+        this.parsed = message;
     }
 
     /**
