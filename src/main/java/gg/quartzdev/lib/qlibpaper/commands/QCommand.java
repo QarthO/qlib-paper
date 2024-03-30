@@ -1,8 +1,8 @@
-package gg.quartzdev.lib.qpaperpluginlib.commands;
+package gg.quartzdev.lib.qlibpaper.commands;
 
-import gg.quartzdev.lib.qpaperpluginlib.util.QPerm;
-import gg.quartzdev.lib.qpaperpluginlib.util.QPlugin;
-import gg.quartzdev.lib.qpaperpluginlib.util.Sender;
+import gg.quartzdev.lib.qlibpaper.util.QPerm;
+import gg.quartzdev.lib.qlibpaper.util.QPlugin;
+import gg.quartzdev.lib.qlibpaper.util.Sender;
 import org.bukkit.command.CommandSender;
 
 public abstract class QCommand {

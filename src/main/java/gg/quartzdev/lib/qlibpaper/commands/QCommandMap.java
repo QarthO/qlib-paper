@@ -1,7 +1,7 @@
-package gg.quartzdev.lib.qpaperpluginlib.commands;
+package gg.quartzdev.lib.qlibpaper.commands;
 
-import gg.quartzdev.lib.qpaperpluginlib.util.QLogger;
-import gg.quartzdev.lib.qpaperpluginlib.util.QPlugin;
+import gg.quartzdev.lib.qlibpaper.util.QLogger;
+import gg.quartzdev.lib.qlibpaper.util.QPlugin;
 
 import java.util.HashMap;
 import java.util.List;

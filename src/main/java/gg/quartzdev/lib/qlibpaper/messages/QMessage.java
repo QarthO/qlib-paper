@@ -1,4 +1,4 @@
-package gg.quartzdev.lib.qpaperpluginlib.messages;
+package gg.quartzdev.lib.qlibpaper.messages;
 
 public class QMessage {
 
@@ -30,6 +30,11 @@ public class QMessage {
      */
     public QMessage parse(String placeholder, String value){
         parsed = parsed.replaceAll("<" + placeholder + ">", value);
+        return this;
+    }
+
+    public QMessage parse(QPlaceholder placeholder, String value){
+        parsed = parsed.replaceAll(placeholder.get(), value);
         return this;
     }
 }

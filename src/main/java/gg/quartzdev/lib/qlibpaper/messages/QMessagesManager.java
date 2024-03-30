@@ -1,6 +1,6 @@
-package gg.quartzdev.lib.qpaperpluginlib.messages;
+package gg.quartzdev.lib.qlibpaper.messages;
 
-import gg.quartzdev.lib.qpaperpluginlib.storage.QConfiguration;
+import gg.quartzdev.lib.qlibpaper.storage.QConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

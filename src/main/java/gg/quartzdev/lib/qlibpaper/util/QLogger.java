@@ -1,10 +1,7 @@
-package gg.quartzdev.lib.qpaperpluginlib.util;
+package gg.quartzdev.lib.qlibpaper.util;
 
-import gg.quartzdev.lib.qpaperpluginlib.messages.QMessage;
+import gg.quartzdev.lib.qlibpaper.messages.QMessage;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Tameable;
-
-import java.util.logging.Level;
 
 public class QLogger {
     /**

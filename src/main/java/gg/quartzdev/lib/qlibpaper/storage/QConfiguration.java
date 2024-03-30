@@ -1,15 +1,18 @@
-package gg.quartzdev.lib.qpaperpluginlib.storage;
+package gg.quartzdev.lib.qlibpaper.storage;
 
-import gg.quartzdev.lib.qpaperpluginlib.util.QLogger;
-import gg.quartzdev.lib.qpaperpluginlib.util.QPlugin;
+import gg.quartzdev.lib.qlibpaper.messages.GenericMessages;
+import gg.quartzdev.lib.qlibpaper.util.QLogger;
+import gg.quartzdev.lib.qlibpaper.util.QPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class QConfiguration {
+    private final JavaPlugin plugin;
     private final String fileName;
     private final String filePath;
     private double schemaVersion = 1.0;
@@ -25,22 +29,32 @@ public abstract class QConfiguration {
     private File file;
     protected YamlConfiguration yamlConfiguration;
 
-    public QConfiguration(String fileName){
+    public QConfiguration(JavaPlugin plugin, String fileName){
+        this.plugin = plugin;
         this.fileName = fileName;
+        setupDataFolder(plugin.getDataFolder());
         String fileSeparator = System.getProperty("file.separator");
         filePath =
-                QPlugin.getPlugin().getDataFolder() +
+                plugin.getDataFolder().getPath() +
                 fileSeparator +
                 fileName.replaceAll("/", fileSeparator);
         loadFile();
+    }
+
+    private void setupDataFolder(File dataFolder){
+        try{
+            dataFolder.mkdirs();
+        } catch(SecurityException exception){
+            QLogger.error(GenericMessages.ERROR_CREATE_FILE.parse("file", dataFolder.getPath() + " Directory"));
+        }
     }
 
     private void loadFile() {
         file = new File(filePath);
         try {
             if (file.createNewFile()) {
-                QPlugin.getPlugin().saveResource(fileName, true);
-                QLogger.info(QPlugin.genericMessages.get("FILE_CREATED").parse("file", fileName));
+                plugin.saveResource(fileName, true);
+                QLogger.info(GenericMessages.FILE_CREATED.parse("file", fileName));
             }
 
             yamlConfiguration = YamlConfiguration.loadConfiguration(file);
@@ -49,13 +63,16 @@ public abstract class QConfiguration {
             }
             stampFile();
         } catch (IOException exception) {
-            QLogger.error(QPlugin.genericMessages.get("ERROR_CREATE_FILE").parse("file", fileName));
+            QLogger.error(GenericMessages.ERROR_CREATE_FILE.parse("file", fileName));
             QLogger.error(exception.getMessage());
         }
     }
+
+    @SuppressWarnings("UnstableApiUsage")
     public void stampFile(){
         List<String> notes = new ArrayList<>();
-        notes.add("Last loaded with " + QPlugin.getName() + " v" + QPlugin.getVersion());
+        notes.add("Last loaded with " + plugin.getName() + " v" + plugin.getPluginMeta().getVersion());
+//        notes.add("Last loaded with " + QPlugin.getName() + " v" + QPlugin.getVersion());
         yamlConfiguration.setComments("schema-version", notes);
         save();
     }

@@ -1,7 +1,7 @@
-package gg.quartzdev.lib.qpaperpluginlib.commands;
+package gg.quartzdev.lib.qlibpaper.commands;
 
-import gg.quartzdev.lib.qpaperpluginlib.util.QPlugin;
-import gg.quartzdev.lib.qpaperpluginlib.util.Sender;
+import gg.quartzdev.lib.qlibpaper.util.QPlugin;
+import gg.quartzdev.lib.qlibpaper.util.Sender;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -69,7 +69,6 @@ public class SubCommandManager extends Command {
         Collections.sort(completions);
         return completions;
     }
-
 
 }
 

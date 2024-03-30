@@ -1,4 +1,4 @@
-package gg.quartzdev.lib.qpaperpluginlib.util;
+package gg.quartzdev.lib.qlibpaper.util;
 
 public enum QPerm {
 

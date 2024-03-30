@@ -1,8 +1,7 @@
-package gg.quartzdev.lib.qpaperpluginlib.util;
+package gg.quartzdev.lib.qlibpaper.util;
 
-import gg.quartzdev.lib.qpaperpluginlib.messages.QMessage;
+import gg.quartzdev.lib.qlibpaper.messages.QMessage;
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
