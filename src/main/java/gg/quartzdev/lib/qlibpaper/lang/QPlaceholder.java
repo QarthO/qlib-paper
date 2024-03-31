@@ -1,9 +1,4 @@
-package gg.quartzdev.lib.qlibpaper.messages;
-
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-
-import java.io.File;
+package gg.quartzdev.lib.qlibpaper.lang;
 
 public enum QPlaceholder {
 

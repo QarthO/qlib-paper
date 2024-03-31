@@ -1,8 +1,8 @@
 package gg.quartzdev.lib.qlibpaper.storage;
 
-import gg.quartzdev.lib.qlibpaper.messages.GenericMessages;
-import gg.quartzdev.lib.qlibpaper.messages.QPlaceholder;
-import gg.quartzdev.lib.qlibpaper.util.QLogger;
+import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
+import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
+import gg.quartzdev.lib.qlibpaper.QLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -40,9 +40,12 @@ public abstract class QConfiguration {
         loadFile();
     }
 
+
     private void setupDataFolder(File dataFolder){
         try{
-            dataFolder.mkdirs();
+            if(dataFolder.mkdirs()){
+                QLogger.info(GenericMessages.FILE_CREATED.parse(QPlaceholder.FILE, dataFolder.getPath() + " Directory"));
+            }
         } catch(SecurityException exception){
             QLogger.error(GenericMessages.ERROR_CREATE_FILE.parse("file", dataFolder.getPath() + " Directory"));
         }

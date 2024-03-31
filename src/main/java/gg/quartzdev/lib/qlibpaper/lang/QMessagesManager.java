@@ -1,4 +1,4 @@
-package gg.quartzdev.lib.qlibpaper.messages;
+package gg.quartzdev.lib.qlibpaper.lang;
 
 import gg.quartzdev.lib.qlibpaper.storage.QConfiguration;
 import org.jetbrains.annotations.NotNull;

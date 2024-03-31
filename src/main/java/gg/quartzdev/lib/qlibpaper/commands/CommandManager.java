@@ -1,8 +1,8 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
-import gg.quartzdev.lib.qlibpaper.messages.GenericMessages;
-import gg.quartzdev.lib.qlibpaper.messages.QPlaceholder;
-import gg.quartzdev.lib.qlibpaper.util.Sender;
+import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
+import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
+import gg.quartzdev.lib.qlibpaper.Sender;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -14,10 +14,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class SubCommandManager extends Command {
+public class CommandManager extends Command {
 
     HashMap<String, QCommand> subCommands;
-    public SubCommandManager(String name, @NotNull List<String> aliases){
+    public CommandManager(String name, @NotNull List<String> aliases){
         super(name);
         super.setAliases(aliases);
         Bukkit.getCommandMap().register(name, this);

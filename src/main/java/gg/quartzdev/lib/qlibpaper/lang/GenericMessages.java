@@ -1,4 +1,4 @@
-package gg.quartzdev.lib.qlibpaper.messages;
+package gg.quartzdev.lib.qlibpaper.lang;
 
 public class GenericMessages {
 

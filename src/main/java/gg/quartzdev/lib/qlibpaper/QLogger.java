@@ -1,6 +1,6 @@
-package gg.quartzdev.lib.qlibpaper.util;
+package gg.quartzdev.lib.qlibpaper;
 
-import gg.quartzdev.lib.qlibpaper.messages.QMessage;
+import gg.quartzdev.lib.qlibpaper.lang.QMessage;
 import org.bukkit.Bukkit;
 
 public class QLogger {

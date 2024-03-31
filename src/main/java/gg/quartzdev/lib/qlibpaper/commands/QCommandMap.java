@@ -1,28 +1,38 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
-import gg.quartzdev.lib.qlibpaper.messages.GenericMessages;
-import gg.quartzdev.lib.qlibpaper.util.QLogger;
+import gg.quartzdev.lib.qlibpaper.QLogger;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class QCommandMap {
 
-    private HashMap<String, SubCommandManager> commands;
+    private HashMap<String, CommandManager> commands;
 
     public QCommandMap(){
         commands = new HashMap<>();
-        setupDefaultCommand();
     }
 
-    public void setupDefaultCommand(){
-//        SubCommandManager baseCmd = new SubCommandManager(
-//                QPlugin.getName(),
-//                List.of(QPlugin.getName().replaceFirst("q", "")));
-//        commands.put(QPlugin.getName().toLowerCase(), baseCmd);
+    /**
+     * creates a new command
+     * @param label command label
+     * @param command command that is ran if no arguments
+     * @param aliases list of aliases for the command label
+     */
+    public void create(String label, QCommand command, List<String> aliases){
+        if(commands.containsKey(label)){
+//            TODO: have it throw an exception instead of returning
+            QLogger.error("error: cmd alreayd exists");
+            return;
+        }
+        CommandManager commandManager = new CommandManager(label.toLowerCase(), aliases);
+        commandManager.add("", command);
+
+        commands.put(label, commandManager);
     }
 
     public void add(String label, QCommand command){
-        SubCommandManager cm = commands.get(label);
+        CommandManager cm = commands.get(label);
         if(cm == null){
             QLogger.error("api error: command not found");
             return;

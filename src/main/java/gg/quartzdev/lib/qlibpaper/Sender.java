@@ -1,8 +1,8 @@
-package gg.quartzdev.lib.qlibpaper.util;
+package gg.quartzdev.lib.qlibpaper;
 
-import gg.quartzdev.lib.qlibpaper.messages.GenericMessages;
-import gg.quartzdev.lib.qlibpaper.messages.QMessage;
-import gg.quartzdev.lib.qlibpaper.messages.QPlaceholder;
+import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
+import gg.quartzdev.lib.qlibpaper.lang.QMessage;
+import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
@@ -12,6 +12,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ *  Easy way to send information to a player or console. All text messages supports MiniMessage format
+ */
 public class Sender {
 
     private static String CONSOLE_PREFIX = "<gray>[<red>q<aqua>Plugin<gray>]";

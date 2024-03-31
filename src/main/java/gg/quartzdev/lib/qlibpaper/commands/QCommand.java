@@ -1,43 +1,80 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
-import gg.quartzdev.lib.qlibpaper.messages.GenericMessages;
-import gg.quartzdev.lib.qlibpaper.util.QPerm;
-import gg.quartzdev.lib.qlibpaper.util.Sender;
+import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
+import gg.quartzdev.lib.qlibpaper.QPerm;
+import gg.quartzdev.lib.qlibpaper.Sender;
 import org.bukkit.command.CommandSender;
 
 public abstract class QCommand {
 
-    String name;
+    String commandName;
     QPerm permissionGroup;
 
-    public QCommand(String name, QPerm permissionGroup){
-        this.name = name;
+    /**
+     *
+     * @param commandName name of the command
+     * @param permissionGroup permission group the command is in
+     */
+    public QCommand(String commandName, QPerm permissionGroup){
+        this.commandName = commandName;
         this.permissionGroup = permissionGroup;
 
     }
 
+    /**
+     * checks if the sender has the commands permission group, or the commands specific permission
+     * <plugin>.command.<command-name> (ie. 'qspleef.command.join')
+     * @param sender the sender to check if they have permission
+     * @return if they have permission
+     */
     private boolean hasPermission(CommandSender sender){
-        return sender.hasPermission(permissionGroup.get()) || sender.hasPermission(QPerm.COMMAND.cmd(name));
+        return sender.hasPermission(permissionGroup.get()) || sender.hasPermission(QPerm.COMMAND.cmd(commandName).get());
     }
 
+    /**
+     * Checks if the sender has permission then runs the command
+     * @param sender who ran the commmand
+     * @param label the command label
+     * @param args the arguments of the command
+     * @return true or false whether the command ran successfully
+     */
     public boolean run(CommandSender sender, String label, String[] args){
-        //        checks permission
-        if(!this.hasPermission(sender)){
-            Sender.message(sender, GenericMessages.ERROR_NO_PERMISSION);
-            return false;
+//        checks permission
+        if(this.hasPermission(sender)){
+//            runs command logic
+            return logic(sender, label, args);
         }
-//        runs command
-        return logic(sender, label, args);
+//        fails permission check
+        Sender.message(sender, GenericMessages.ERROR_NO_PERMISSION);
+        return false;
     }
 
     public abstract boolean logic(CommandSender sender, String label, String[] args);
 
+    /**
+     * Returns the tab completions based on what the command the sender has already types,
+     * but first verifying the sender has permission to view the tab completions
+     * @param sender the sender to send tab completions to
+     * @param args the args the sender is typing
+     * @return the list of tab completions
+     */
     public Iterable<String> getTabCompletions(CommandSender sender, String[] args){
-        if(!this.hasPermission(sender)){
-            return null;
+//        checks permission
+        if(this.hasPermission(sender)){
+//            sends tab completes
+            return this.tabCompletionLogic(sender, args);
         }
-        return this.tabCompletionLogic(sender, args);
+//        sends nothing if no permission
+        return null;
     }
+
+    /**
+     * The logic a {@link QCommand} uses to decide what tab completions are sent back to the {@link CommandSender}.
+     * Note: This will only be called if the {@link CommandSender} has permission to run the command
+     * @param sender the command sender who is typing a command
+     * @param args the command sender's current arguments
+     * @return list of tab completions
+     */
     public abstract Iterable<String> tabCompletionLogic(CommandSender sender, String[] args);
 
 }
