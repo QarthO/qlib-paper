@@ -1,6 +1,7 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
 import gg.quartzdev.lib.qlibpaper.QLogger;
+import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,14 @@ public class QCommandMap {
             return;
         }
         cm.add(label, command);
+    }
+
+    public void unregister(CommandManager command){
+        command.unregister(Bukkit.getCommandMap());
+    }
+
+    public void unregisterAll(){
+        commands.values().forEach((this::unregister));
     }
 
 }
