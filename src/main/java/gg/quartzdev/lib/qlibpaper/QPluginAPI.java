@@ -4,11 +4,10 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class QPluginAPI {
-    private Metrics metrics;
     private JavaPlugin pluginInstance;
 
     public void setupMetrics(int pluginId){
-        metrics = new Metrics(pluginInstance, pluginId);
+        new Metrics(pluginInstance, pluginId);
     }
 
     @SuppressWarnings("UnstableApiUsage")
@@ -20,7 +19,7 @@ public abstract class QPluginAPI {
         return pluginInstance.getName();
     }
 
-    abstract void setupConfig();
-    abstract void registerListeners();
-    abstract void registerCommands();
+    public abstract void setupConfig();
+    public abstract void registerListeners();
+    public abstract void registerCommands();
 }
