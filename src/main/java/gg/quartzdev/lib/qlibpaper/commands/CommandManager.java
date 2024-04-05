@@ -20,6 +20,7 @@ public class CommandManager extends Command {
     public CommandManager(String name, @NotNull List<String> aliases){
         super(name);
         super.setAliases(aliases);
+        subCommands = new HashMap<>();
         Bukkit.getCommandMap().register(name, this);
     }
 

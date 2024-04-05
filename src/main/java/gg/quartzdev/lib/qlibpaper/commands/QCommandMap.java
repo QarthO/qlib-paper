@@ -32,7 +32,7 @@ public class QCommandMap {
         commands.put(label, commandManager);
     }
 
-    public void add(String label, QCommand command){
+    public void addSubCommand(String label, QCommand command){
         CommandManager cm = commands.get(label);
         if(cm == null){
             QLogger.error("api error: command not found");
