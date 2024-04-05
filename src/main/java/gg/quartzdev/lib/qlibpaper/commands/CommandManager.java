@@ -50,7 +50,8 @@ public class CommandManager extends Command {
     @Override
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String labelOrAlias, String[] args) throws IllegalArgumentException {
         List<String> completions = new ArrayList<>();
-//
+
+
         if(args.length == 1){
             StringUtil.copyPartialMatches(args[0], subCommands.keySet(), completions);
         }

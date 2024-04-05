@@ -38,7 +38,7 @@ public class QCommandMap {
             QLogger.error("api error: command not found");
             return;
         }
-        cm.add(label, command);
+        cm.add(command.commandName, command);
     }
 
     public void unregister(CommandManager command){
