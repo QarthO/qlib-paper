@@ -1,38 +1,17 @@
 package gg.quartzdev.lib.qlibpaper;
 
-public enum QPerm {
+public class QPerm {
 
-    COMMAND,
-    GROUP_PLAYER,
-    GROUP_MOD,
-    GROUP_ADMIN;
+    public static String COMMAND = "command.";
+    public static String GROUP_PLAYER = "group.player";
+    public static String GROUP_MOD = "group.mod";
+    public static String GROUP_ADMIN = "group.admin";
 
-    private String node;
-    private String prefix;
-
-    QPerm(){
-        node = name();
-    }
-
-    @Override
-    public String toString(){
-        return get();
-    }
-
-    public QPerm cmd(String commandName){
-        node += commandName.replaceAll(" ", "-");
-        return this;
-    }
-
-    public QPerm prefix(String prefix){
-        this.prefix = prefix;
-        return this;
-    }
-
-    public String get() {
-        String result = node;
-        node = name();
-        return (prefix.toLowerCase() + "." + this.get().replaceAll("_", ".")).toLowerCase();
+    public QPerm(String permissionPrefix){
+        COMMAND = permissionPrefix + COMMAND;
+        GROUP_PLAYER = permissionPrefix + GROUP_PLAYER;
+        GROUP_MOD = permissionPrefix + GROUP_MOD;
+        GROUP_ADMIN = permissionPrefix + GROUP_ADMIN;
     }
 
 }
