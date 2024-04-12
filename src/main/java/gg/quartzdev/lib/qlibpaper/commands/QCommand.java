@@ -23,6 +23,22 @@ public abstract class QCommand {
     }
 
     /**
+     *
+     * @return the command name of the command
+     */
+    public String commandName(){
+        return this.commandName;
+    }
+
+    /**
+     *
+     * @return the permission group this command is assigned to
+     */
+    public String permissionGroup(){
+        return this.permissionGroup;
+    }
+
+    /**
      * checks if the sender has the commands permission group, or the commands specific permission
      * <plugin>.command.<command-name> (ie. 'qspleef.command.join')
      * @param sender the sender to check if they have permission
