@@ -5,6 +5,7 @@ import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
 import gg.quartzdev.lib.qlibpaper.QLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -221,5 +222,31 @@ public abstract class QConfiguration {
      */
     public Map<String, Object> getValues(boolean deep){
         return yamlConfiguration.getValues(deep);
+    }
+
+    public @Nullable Material getMaterial(String path){
+        Object data = yamlConfiguration.get(path);
+        if(data == null){
+            return null;
+        }
+
+        String rawData = data.toString();
+        try {
+            return Material.valueOf(rawData);
+        } catch(IllegalArgumentException e){
+            return null;
+        }
+    }
+
+    public @Nullable List<Material> getMaterialList(String path){
+        List<Material> materials = new ArrayList<>();
+        for(String materialName : getStringList(path)){
+            try {
+                materials.add(Material.valueOf(materialName));
+            } catch(IllegalArgumentException e){
+                continue;
+            }
+        }
+        return materials;
     }
 }
