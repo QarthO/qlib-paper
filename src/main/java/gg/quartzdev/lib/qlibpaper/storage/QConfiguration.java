@@ -45,10 +45,10 @@ public abstract class QConfiguration {
     private void setupDataFolder(File dataFolder){
         try{
             if(dataFolder.mkdirs()){
-                QLogger.info(GenericMessages.FILE_CREATED.parse(QPlaceholder.FILE, dataFolder.getPath() + " Directory"));
+                QLogger.info(GenericMessages.FILE_CREATE.parse(QPlaceholder.FILE, dataFolder.getPath() + " Directory"));
             }
         } catch(SecurityException exception){
-            QLogger.error(GenericMessages.ERROR_CREATE_FILE.parse("file", dataFolder.getPath() + " Directory"));
+            QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", dataFolder.getPath() + " Directory"));
         }
     }
 
@@ -57,7 +57,7 @@ public abstract class QConfiguration {
         try {
             if (file.createNewFile()) {
                 plugin.saveResource(fileName, true);
-                QLogger.info(GenericMessages.FILE_CREATED.parse("file", fileName));
+                QLogger.info(GenericMessages.FILE_CREATE.parse("file", fileName));
             }
 
             yamlConfiguration = YamlConfiguration.loadConfiguration(file);
@@ -66,7 +66,7 @@ public abstract class QConfiguration {
             }
             stampFile();
         } catch (IOException exception) {
-            QLogger.error(GenericMessages.ERROR_CREATE_FILE.parse("file", fileName));
+            QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", fileName));
             QLogger.error(exception.getMessage());
         }
     }
@@ -94,7 +94,7 @@ public abstract class QConfiguration {
         try {
             yamlConfiguration.save(file);
         } catch(IOException exception){
-            QLogger.error(GenericMessages.ERROR_SAVE_FILE.parse(QPlaceholder.FILE, filePath));
+            QLogger.error(GenericMessages.ERROR_FILE_SAVE.parse(QPlaceholder.FILE, filePath));
         }
     }
 
