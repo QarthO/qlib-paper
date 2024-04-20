@@ -10,10 +10,23 @@ import java.util.Arrays;
 
 public class QLogger {
 
+    private static QLogger INSTANCE;
     private static ComponentLogger LOGGER;
+    private boolean logsErrorsToFile;
 
-    public QLogger(ComponentLogger logger){
+    private QLogger(){
+
+    }
+    private QLogger(ComponentLogger logger){
         LOGGER = logger;
+    }
+
+    public static void init(ComponentLogger logger){
+        if(INSTANCE != null){
+            error("Error: QLogger has already been initialized");
+            return;
+        }
+        INSTANCE = new QLogger(logger);
     }
 
     private static Component parseOutPrefix(String msg){
