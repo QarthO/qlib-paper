@@ -16,15 +16,6 @@ import org.bukkit.entity.Player;
  *  Easy way to send information to a player or console. All text messages supports MiniMessage format
  */
 public class Sender {
-
-    private static String CONSOLE_PREFIX = "<gray>[<red>q<aqua>Plugin<gray>]";
-    private static String CHAT_PREFIX = "<gray>[<red>q<aqua>Plugin<gray>]";
-
-    public Sender(String consolePrefix, String chatPrefix){
-        CONSOLE_PREFIX = consolePrefix;
-        CHAT_PREFIX = chatPrefix;
-    }
-
     /**
      * Sends a message to the player in chat
      * @param sender the {@link CommandSender} to send the message to
@@ -112,6 +103,6 @@ public class Sender {
     private static Component parse(String message, boolean isConsole){
         MiniMessage mm = MiniMessage.miniMessage();
         return mm.deserialize(message,
-                Placeholder.parsed("prefix", isConsole ? CONSOLE_PREFIX : CHAT_PREFIX));
+                Placeholder.parsed("prefix", isConsole ? GenericMessages.CONSOLE_PREFIX.get() : GenericMessages.CHAT_PREFIX.get()));
     }
 }
