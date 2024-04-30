@@ -57,14 +57,11 @@ public abstract class QConfiguration {
     private void loadFile() {
         try {
             if (file.createNewFile()) {
-                final String resourceName = StringUtils.getChomp(fileName, "/");
-                QLogger.info("RESOURCE NAME: '" + resourceName + "'");
-
-                plugin.saveResource(resourceName, true);
-                QLogger.info("created file");
+                final String[] paths = fileName.split("/");
+                QLogger.info("FILENAME: " + paths[paths.length-1]);
+                plugin.saveResource(paths[paths.length-1], true);
                 QLogger.info(GenericMessages.FILE_CREATE.parse("file", fileName));
             }
-            QLogger.info("after try create file");
             yamlConfiguration = YamlConfiguration.loadConfiguration(file);
             if(!validateSchema()){
                 QLogger.info("Unsupported Config Schema... Reset your config");
