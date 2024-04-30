@@ -16,9 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class QConfiguration {
     private final JavaPlugin plugin;
@@ -28,38 +26,40 @@ public abstract class QConfiguration {
     private final double minSupportedScema = 1.0;
     private File file;
     protected YamlConfiguration yamlConfiguration;
+    protected Set<ConfigOption<?>> options;
 
     public QConfiguration(JavaPlugin plugin, String fileName){
         this.plugin = plugin;
         this.fileName = fileName;
-        setupDataFolder(plugin.getDataFolder());
         String fileSeparator = System.getProperty("file.separator");
         filePath =
                 plugin.getDataFolder().getPath() +
                 fileSeparator +
                 fileName.replaceAll("/", fileSeparator);
+        file = new File(filePath);
+        setupDirectory(file.getParentFile());
         loadFile();
     }
 
-
-    private void setupDataFolder(File dataFolder){
+    private void setupDirectory(File directory){
         try{
-            if(dataFolder.mkdirs()){
-                QLogger.info(GenericMessages.FILE_CREATE.parse(QPlaceholder.FILE, dataFolder.getPath() + " Directory"));
+            if(directory.mkdirs()){
+                QLogger.info(GenericMessages.FILE_CREATE.parse(QPlaceholder.FILE, directory.getPath() + " Directory"));
             }
         } catch(SecurityException exception){
-            QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", dataFolder.getPath() + " Directory"));
+            QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", directory.getPath() + " Directory"));
         }
     }
 
     private void loadFile() {
-        file = new File(filePath);
+        QLogger.info("loading file");
         try {
             if (file.createNewFile()) {
                 plugin.saveResource(fileName, true);
+                QLogger.info("created file");
                 QLogger.info(GenericMessages.FILE_CREATE.parse("file", fileName));
             }
-
+            QLogger.info("after try create file");
             yamlConfiguration = YamlConfiguration.loadConfiguration(file);
             if(!validateSchema()){
                 QLogger.info("Unsupported Config Schema... Reset your config");
