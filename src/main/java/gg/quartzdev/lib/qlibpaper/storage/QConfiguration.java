@@ -1,5 +1,6 @@
 package gg.quartzdev.lib.qlibpaper.storage;
 
+import gg.quartzdev.lib.qlibpaper.Sender;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
 import gg.quartzdev.lib.qlibpaper.QLogger;
@@ -11,6 +12,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.StringUtil;
+import org.codehaus.plexus.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -52,10 +55,12 @@ public abstract class QConfiguration {
     }
 
     private void loadFile() {
-        QLogger.info("loading file");
         try {
             if (file.createNewFile()) {
-                plugin.saveResource(fileName, true);
+                final String resourceName = StringUtils.getChomp(fileName, "/");
+                QLogger.info("RESOURCE NAME: '" + resourceName + "'");
+
+                plugin.saveResource(resourceName, true);
                 QLogger.info("created file");
                 QLogger.info(GenericMessages.FILE_CREATE.parse("file", fileName));
             }
