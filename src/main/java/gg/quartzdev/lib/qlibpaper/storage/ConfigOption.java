@@ -1,41 +1,33 @@
 package gg.quartzdev.lib.qlibpaper.storage;
 
-import org.bukkit.scheduler.BukkitRunnable;
-
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-public class ConfigOption<T> extends BukkitRunnable implements IConfigOption {
-    final String STORAGE_PATH;
-    QConfiguration storageConfiguration;
-    T value;
-    BukkitRunnable loader;
+public class ConfigOption<T> implements IConfigOption {
+    private T value;
+    private final Supplier<T> loader;
+    private final Consumer<T> saver;
 
-    public ConfigOption(QConfiguration storageConfiguration, String storagePath, T defaultValue){
-        this.storageConfiguration = storageConfiguration;
-        this.STORAGE_PATH = storagePath;
-        this.value = defaultValue;
+    public ConfigOption(Supplier<T> loader, Consumer<T> saver){
+        this.loader = loader;
+        this.saver = saver;
+        load();
     }
 
-    public void loadValue(){
-        value = (T) storageConfiguration.get(STORAGE_PATH);
+    public void load(){
+        value = loader.get();
     }
 
-    public void test(Consumer<T> test){
-        test.accept(value);
-    }
-
-    public void t(){
-        test((var) -> this.storageConfiguration.yamlConfiguration.get(var.toString()));
+    public T get(){
+        return value;
     }
 
     public void setValue(T value){
         this.value = value;
-        storageConfiguration.yamlConfiguration.set(STORAGE_PATH, value);
-        storageConfiguration.save();
     }
 
-    @Override
-    public void run() {
-
+    public void save(){
+        saver.accept(value);
     }
+
 }
