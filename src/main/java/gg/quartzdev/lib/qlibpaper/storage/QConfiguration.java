@@ -47,7 +47,7 @@ public abstract class QConfiguration {
     private void setupDirectory(File directory){
         try{
             if(directory.mkdirs()){
-                QLogger.info(GenericMessages.FILE_CREATE.parse(QPlaceholder.FILE, directory.getPath() + " Directory"));
+//                QLogger.info(GenericMessages.FILE_CREATE.parse(QPlaceholder.FILE, directory.getPath() + " Directory"));
             }
         } catch(SecurityException exception){
             QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", directory.getPath() + " Directory"));
@@ -57,8 +57,6 @@ public abstract class QConfiguration {
     private void loadFile() {
         try {
             if (file.createNewFile()) {
-//                final String[] paths = fileName.split("/");
-//                QLogger.info("FILENAME: " + paths[paths.length-1]);
                 plugin.saveResource(fileName, true);
                 QLogger.info(GenericMessages.FILE_CREATE.parse("file", fileName));
             }
