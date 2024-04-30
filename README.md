@@ -7,17 +7,20 @@
 
 ---
 
-# qPaperPlugin Library
+# qlib-paper [WIP]
 
 ---
 
-### Helpful tools when creating paper plugins
+### A [Paper][paper-url] plugin library
+### This is still heavily WIP and not fully functional yet
 
 ---
 
-- Custom command api supporting subcommands, aliases, permissions and permission groups, tabcompletion
-- Config
-- bStats
+- Custom API for Commands
+  - Command Aliases, TabCompletions, Subcommands
+- Config and Datafiles
+- Includes [bStats][bstats-url]
+- Includes [MorePersistentDataTypes][datatypes-url]
 
 ---
 
@@ -31,8 +34,8 @@ Add qPaperPlugin to your ``/pom.xml`` using [JitPack][jitpack-url]
 ```xml
         <dependency>
             <groupId>com.github.QarthO</groupId>
-            <artifactId>qPaperPlugin</artifactId>
-            <version>0.1.0</version>
+            <artifactId>qlib-paper</artifactId>
+            <version>put-version-here</version>
             <scope>compile</scope>
         </dependency>
 ```
@@ -45,3 +48,6 @@ Add qPaperPlugin to your ``/pom.xml`` using [JitPack][jitpack-url]
 [paypal-shield]: https://img.shields.io/badge/Donate-00457C?logo=paypal&logoColor=white&style=for-the-badge
 [paypal-url]: https://quartzdev.gg/paypal/
 [jitpack-url]: https://jitpack.io/#QarthO/qPaperPlugin/
+[paper-url]: https://papermc.io/
+[bstats-url]: https:/bstats.org/
+[datatypes-url]: https://github.com/mfnalex/MorePersistentDataTypes
