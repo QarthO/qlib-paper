@@ -57,9 +57,9 @@ public abstract class QConfiguration {
     private void loadFile() {
         try {
             if (file.createNewFile()) {
-                final String[] paths = fileName.split("/");
-                QLogger.info("FILENAME: " + paths[paths.length-1]);
-                plugin.saveResource(paths[paths.length-1], true);
+//                final String[] paths = fileName.split("/");
+//                QLogger.info("FILENAME: " + paths[paths.length-1]);
+                plugin.saveResource(fileName, true);
                 QLogger.info(GenericMessages.FILE_CREATE.parse("file", fileName));
             }
             yamlConfiguration = YamlConfiguration.loadConfiguration(file);
