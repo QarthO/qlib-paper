@@ -30,6 +30,7 @@ public abstract class QConfiguration {
     private File file;
     protected YamlConfiguration yamlConfiguration;
     protected Set<ConfigOption<?>> options;
+    public HashMap<String, ConfigOption<?>> configOptions;
 
     public QConfiguration(JavaPlugin plugin, String fileName){
         this.plugin = plugin;
@@ -41,6 +42,7 @@ public abstract class QConfiguration {
                 fileName.replaceAll("/", fileSeparator);
         file = new File(filePath);
         setupDirectory(file.getParentFile());
+        configOptions = new HashMap<>();
         loadFile();
     }
 
@@ -114,7 +116,7 @@ public abstract class QConfiguration {
         return this.schemaVersion;
     }
 
-    public @Nullable Object get(String path){
+    protected @Nullable Object get(String path){
         return yamlConfiguration.get(path);
     }
 

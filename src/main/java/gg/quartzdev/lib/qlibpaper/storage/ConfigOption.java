@@ -1,17 +1,21 @@
 package gg.quartzdev.lib.qlibpaper.storage;
 
+import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ConfigOption<T> implements IConfigOption {
+    private String path;
+    private YamlConfiguration yamlConfiguration;
     private T value;
     private final Supplier<T> loader;
-    private final Consumer<T> saver;
 
-    public ConfigOption(Supplier<T> loader, Consumer<T> saver){
+    public ConfigOption(String path, YamlConfiguration yamlConfiguration, Supplier<T> loader){
+        this.path = path;
+        this.yamlConfiguration = yamlConfiguration;
         this.loader = loader;
-        this.saver = saver;
-        load();
+        save();
     }
 
     public void load(){
@@ -27,7 +31,7 @@ public class ConfigOption<T> implements IConfigOption {
     }
 
     public void save(){
-        saver.accept(value);
+        yamlConfiguration.set(path, value);
     }
 
 }
