@@ -87,7 +87,6 @@ public abstract class QConfiguration {
             yamlConfiguration.set("schema-version", schemaVersion);
         }
         loadSchemaVersion();
-        QLogger.info("schema: " + schemaVersion);
         return schemaVersion >= minSupportedScema;
     }
 
