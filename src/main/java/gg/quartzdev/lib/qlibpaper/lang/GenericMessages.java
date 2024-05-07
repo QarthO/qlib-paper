@@ -22,11 +22,13 @@ public class GenericMessages {
     public static final QMessage ERROR_PLUGIN_ENABLE = new QMessage("<prefix> <red>Error: Plugin already enabled. Most likely caused by unsupported plugin managers or an addon");
 
 //   File
-    public static final QMessage FILE_CREATE = new QMessage("<prefix> <green>Created file: <yellow><file>");
-    public static final QMessage FILE_RELOAD = new QMessage( "<prefix> <green>Reloaded <yellow>'<file>'");
-    public static final QMessage ERROR_FILE_CREATE = new QMessage("<prefix> <green>Created file: <yellow><file>");
-    public static final QMessage ERROR_FILE_SAVE = new QMessage("<prefix> <green>Created file: <yellow><file>");
-    public static final QMessage ERROR_CORRUPT_FILE = new QMessage("<prefix> <red>Error: Unable to read file<yellow><file>");
+    public static final QMessage FILE_CREATE = new QMessage("<prefix> <green>Successfully created file: <yellow><file>");
+    public static final QMessage ERROR_FILE_CREATE = new QMessage("<prefix> <red>Error creating file: <yellow><file>");
+    public static final QMessage FILE_RELOAD = new QMessage( "<prefix> <green>Successfully reloaded file: <yellow><file>");
+    public static final QMessage ERROR_RELOAD = new QMessage( "<prefix> <red>Error reloading file: <yellow><file>");
+    public static final QMessage FILE_SAVE = new QMessage("<prefix> <green>Successfully saved file: <yellow><file>");
+    public static final QMessage ERROR_FILE_SAVE = new QMessage("<prefix> <red>Error saving file: <yellow><file>");
+    public static final QMessage ERROR_CORRUPT_FILE = new QMessage("<prefix> <red>Error: Unable reading file: <yellow><file>");
     public static final QMessage LOG_BROADCAST_SOUND = new QMessage("<prefix> <blue>Broadcasting a sound to all players: <sound>");
     public static final QMessage ERROR_COMMAND_NOT_FOUND = new QMessage("<prefix> <red>Error: Command not found: <yellow><command>");
 }
