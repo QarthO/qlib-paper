@@ -25,6 +25,7 @@ public abstract class QConfiguration {
     private final JavaPlugin plugin;
     private final String fileName;
     private final String filePath;
+    private final boolean useSchema;
     private double schemaVersion = 1.0;
     private final double minSupportedScema = 1.0;
     private File file;
@@ -32,7 +33,7 @@ public abstract class QConfiguration {
     protected Set<ConfigOption<?>> options;
     public HashMap<String, ConfigOption<?>> configOptions;
 
-    public QConfiguration(JavaPlugin plugin, String fileName){
+    public QConfiguration(JavaPlugin plugin, String fileName, boolean useSchema){
         this.plugin = plugin;
         this.fileName = fileName;
         String fileSeparator = System.getProperty("file.separator");
@@ -43,6 +44,7 @@ public abstract class QConfiguration {
         file = new File(filePath);
         setupDirectory(file.getParentFile());
         configOptions = new HashMap<>();
+        this.useSchema = useSchema;
         loadFile();
     }
 
@@ -66,7 +68,9 @@ public abstract class QConfiguration {
             if(!validateSchema()){
                 QLogger.info("Unsupported Config Schema... Reset your config");
             }
-            stampFile();
+            if(useSchema){
+                stampFile();
+            }
         } catch (IOException exception) {
             QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", fileName));
             QLogger.error(exception.getMessage());
