@@ -39,7 +39,7 @@ public class CommandManager extends Command {
         QCommand cmd = subCommands.get(args[0]);
 
         if(cmd == null){
-            Sender.message(sender, GenericMessages.ERROR_COMMAND_NOT_FOUND.parse(QPlaceholder.COMMAND, args[0]));
+            Sender.message(sender, GenericMessages.CMD_NOT_FOUND.parse(QPlaceholder.COMMAND, args[0]));
             return false;
         }
 
