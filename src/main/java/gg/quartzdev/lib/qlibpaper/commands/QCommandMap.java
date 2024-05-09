@@ -17,7 +17,7 @@ public class QCommandMap {
     /**
      * creates a new command
      * @param label command label
-     * @param command command that is ran if no arguments
+     * @param command command that is run if no arguments
      * @param aliases list of aliases for the command label
      */
     public void create(String label, QCommand command, List<String> aliases){
