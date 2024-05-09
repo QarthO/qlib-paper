@@ -18,7 +18,7 @@ public class GenericMessages {
     public static final QMessage ERROR_PLAYER_ONLY_COMMAND = new QMessage( "<prefix> <red>You must be a player to run this command");
     public static final QMessage ERROR_CONSOLE_ONLY_COMMAND = new QMessage( "<prefix> <red>This command can only be ran from the console");
     public static final QMessage CMD_NOT_FOUND = new QMessage("<prefix> <red>Unknown command: <yellow><command>");
-    public static final QMessage ERROR_UPDATE_MESSAGE = new QMessage("<prefix> <red>Error updating message: <yellow><message>");
+    public static final QMessage ERROR_UPDATE_MESSAGE = new QMessage("<prefix> <red>Error updating message: <yellow><key>");
     public static final QMessage LOG_BROADCAST_SOUND = new QMessage("<prefix> <blue>Broadcasting sound: <sound>");
 
 //   File
