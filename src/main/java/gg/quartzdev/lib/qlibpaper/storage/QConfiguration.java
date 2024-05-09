@@ -65,12 +65,13 @@ public abstract class QConfiguration {
                 QLogger.info(GenericMessages.FILE_CREATE.parse("file", fileName));
             }
             yamlConfiguration = YamlConfiguration.loadConfiguration(file);
+            if(!useSchema){
+                return;
+            }
             if(!validateSchema()){
                 QLogger.info("Unsupported Config Schema... Reset your config");
             }
-            if(useSchema){
-                stampFile();
-            }
+            stampFile();
         } catch (IOException exception) {
             QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", fileName));
             QLogger.error(exception.getMessage());
