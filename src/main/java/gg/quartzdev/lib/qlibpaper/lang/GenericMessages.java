@@ -2,7 +2,7 @@ package gg.quartzdev.lib.qlibpaper.lang;
 
 public class GenericMessages {
 
-    public static final QMessage CONSOLE_PREFIX = new QMessage( "<gray>[<red>q<aqua>Plugin<gray>]<reset>");
+    public static final QMessage CONSOLE_PREFIX = new QMessage( "[<red>q<aqua>Plugin<reset>]");
     public static final QMessage CHAT_PREFIX = new QMessage( "<red>q<aqua>Plugin <bold><gray>></bold><reset>");
 
     public GenericMessages(String consolePrefix, String chatPrefix){
