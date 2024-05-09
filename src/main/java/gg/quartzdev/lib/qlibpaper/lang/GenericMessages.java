@@ -2,8 +2,8 @@ package gg.quartzdev.lib.qlibpaper.lang;
 
 public class GenericMessages {
 
-    public static final QMessage CONSOLE_PREFIX = new QMessage( "<gray>[<red>q<aqua>Plugin<gray>]");
-    public static final QMessage CHAT_PREFIX = new QMessage( "<red>q<aqua>Plugin <bold><gray>></bold>");
+    public static final QMessage CONSOLE_PREFIX = new QMessage( "<gray>[<red>q<aqua>Plugin<gray>]<reset>");
+    public static final QMessage CHAT_PREFIX = new QMessage( "<red>q<aqua>Plugin <bold><gray>></bold><reset>");
 
     public GenericMessages(String consolePrefix, String chatPrefix){
         CONSOLE_PREFIX.set(consolePrefix);
@@ -23,6 +23,7 @@ public class GenericMessages {
 //   File
     public static final QMessage FILE_CREATE = new QMessage("<prefix> <green>Successfully created file: <yellow><file>");
     public static final QMessage ERROR_FILE_CREATE = new QMessage("<prefix> <red>Error creating file: <yellow><file>");
+    public static final QMessage FILE_LOADING = new QMessage("<prefix> Loading file: <yellow><file>");
     public static final QMessage FILE_RELOAD = new QMessage( "<prefix> <green>Successfully reloaded file: <yellow><file>");
     public static final QMessage ERROR_RELOAD = new QMessage( "<prefix> <red>Error reloading file: <yellow><file>");
     public static final QMessage FILE_SAVE = new QMessage("<prefix> <green>Successfully saved file: <yellow><file>");
