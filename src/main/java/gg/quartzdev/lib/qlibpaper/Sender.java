@@ -17,15 +17,14 @@ import org.bukkit.entity.Player;
  */
 public class Sender {
     /**
-     * Sends a message to the player in chat
+     * Sends a message to the player in chat. If the message is empty, nothing is sent
      * @param sender the {@link CommandSender} to send the message to
      * @param message the message as a {@link String} to send supporting MiniMessage formatting
      */
     public static void message(CommandSender sender, String message){
-        if(sender instanceof Player)
-            sender.sendMessage(parse(message, false));
-        else
-            sender.sendMessage(parse(message, true));
+        if(message.isEmpty())
+            return;
+        sender.sendMessage(parse(message, !(sender instanceof Player)));
     }
 
     /**
