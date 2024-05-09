@@ -13,6 +13,7 @@ public class GenericMessages {
     public static final QMessage PLUGIN_INFO = new QMessage( "<prefix> <green>Running version <gray><version>");
     public static final QMessage PLUGIN_ENABLE = new QMessage( "<prefix> Enabling...");
     public static final QMessage PLUGIN_DISABLE = new QMessage( "<prefix> Disabling...");
+    public static final QMessage ERROR_PLUGIN_ENABLE = new QMessage("<prefix> <red>Error: Plugin is already enabled. Most likely caused by using a plugin manager or an unsupported addon");
     public static final QMessage ERROR_NO_PERMISSION = new QMessage( "<prefix> <red>Error: You don't have permission to perform this");
     public static final QMessage ERROR_PLAYER_ONLY_COMMAND = new QMessage( "<prefix> <red>You must be a player to run this command");
     public static final QMessage ERROR_CONSOLE_ONLY_COMMAND = new QMessage( "<prefix> <red>This command can only be ran from the console");
