@@ -30,4 +30,11 @@ public class GenericMessages {
     public static final QMessage FILE_SAVE = new QMessage("<prefix> <green>Successfully saved file: <yellow><file>");
     public static final QMessage ERROR_FILE_SAVE = new QMessage("<prefix> <red>Error saving file: <yellow><file>");
     public static final QMessage ERROR_CORRUPT_FILE = new QMessage("<prefix> <red>Error reading file: <yellow><file>");
+
+//    Update Checker
+    public static final QMessage UPDATE_CHECKING = new QMessage("<prefix> <reset>Checking for updates...");
+    public static final QMessage UPDATE_AVAILABLE = new QMessage("<prefix> <green>Version <yellow><version><green> available!");
+    public static final QMessage UPDATE_DOWNLOAD_URL = new QMessage("<prefix> <green>Download at: <light_purple><click:open_url:<download_url>><download_url></click>");
+    public static final QMessage UPDATE_NOT_AVAILABLE = new QMessage("<prefix> <green>You're using the latest version");
+    public static final QMessage ERROR_UPDATE_CHECK = new QMessage("<prefix> <red>Error checking for updates");
 }

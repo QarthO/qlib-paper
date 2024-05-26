@@ -3,6 +3,7 @@ package gg.quartzdev.lib.qlibpaper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -55,7 +56,7 @@ public class UpdateChecker {
             JsonElement json = JsonParser.parseString(jsonAsString);
             return json.getAsJsonArray();
         } catch (final Exception e) {
-            QLogger.error("<prefix> <red>Error checking for updates");
+            QLogger.error(GenericMessages.ERROR_UPDATE_CHECK.get());
             QLogger.error(e.getMessage());
             return null;
         }
@@ -66,7 +67,7 @@ public class UpdateChecker {
     }
 
     public void checkForUpdates(String currentVersion){
-        QLogger.info("<prefix> <blue>Checking for updates...");
+        QLogger.info(GenericMessages.UPDATE_CHECKING.get());
         JsonArray versions = getSupportedVersions();
         if(versions == null || versions.isEmpty()){
             return;
@@ -74,12 +75,16 @@ public class UpdateChecker {
         for(JsonElement version : versions){
             String versionString = version.getAsJsonObject().get("version_number").getAsString();
             if(compareVersionStrings(currentVersion, versionString) == -1){
-                QLogger.info("<prefix> <green>Version " + versionString + " is available!");
-                QLogger.info("<prefix> <green>Download at: <light_purple><click:open_url:" + modrinthDownloadURL(versionString) + ">" + modrinthDownloadURL(versionString) + "</click>");
+                QLogger.info(GenericMessages.UPDATE_AVAILABLE
+                        .parse("version", versionString)
+                        .get());
+                QLogger.info(GenericMessages.UPDATE_DOWNLOAD_URL
+                        .parse("download_url", modrinthDownloadURL(versionString))
+                        .get());
                 return;
             }
         }
-        QLogger.info("<prefix> <green>You are using the latest version!");
+        QLogger.info(GenericMessages.UPDATE_NOT_AVAILABLE.get());
     }
 
     /**
