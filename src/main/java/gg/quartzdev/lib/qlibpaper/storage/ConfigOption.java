@@ -15,7 +15,7 @@ public class ConfigOption<T> implements IConfigOption {
         this.path = path;
         this.yamlConfiguration = yamlConfiguration;
         this.loader = loader;
-        save();
+        load();
     }
 
     public void load(){
