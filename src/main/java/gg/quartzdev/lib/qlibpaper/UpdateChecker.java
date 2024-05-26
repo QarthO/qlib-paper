@@ -65,7 +65,7 @@ public class UpdateChecker {
     }
 
     public void checkForUpdatesAsync(JavaPlugin plugin, String currentVersion){
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> checkForUpdates(currentVersion));
+        Bukkit.getAsyncScheduler().runNow(plugin, scheduledTask -> checkForUpdates(currentVersion));
     }
 
     public void checkForUpdates(String currentVersion){
