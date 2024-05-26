@@ -30,7 +30,7 @@ public class QLogger {
     }
 
     private static Component parseOutPrefix(String msg){
-        msg = msg.strip().startsWith("<prefix>") ? msg.replaceFirst("<prefix>", "") : msg;
+        msg = msg.strip().startsWith("<prefix>") ? msg.replaceFirst("<prefix>", "").stripLeading() : msg;
         return MiniMessage.miniMessage().deserialize(msg);
     }
 

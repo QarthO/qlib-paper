@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 public class UpdateChecker {
     final private String slug;
     final private String loader;
-    private boolean debug = false;
 
     /**
      * Creates a new update checker
@@ -53,9 +52,6 @@ public class UpdateChecker {
             InputStream stream = connection.getInputStream();
             Scanner scanner = new Scanner(stream);
             String jsonAsString = scanner.nextLine();
-            if(debug){
-                QLogger.info("<prefix> <light_purple>Debug <white>>></white> UPDATE API JSON: <yellow>" + jsonAsString);
-            }
             JsonElement json = JsonParser.parseString(jsonAsString);
             return json.getAsJsonArray();
         } catch (final Exception e) {
