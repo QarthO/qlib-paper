@@ -72,7 +72,6 @@ public class UpdateChecker {
         QLogger.info("<prefix> <blue>Checking for updates...");
         JsonArray versions = getSupportedVersions();
         if(versions == null || versions.isEmpty()){
-            QLogger.info("<prefix> <green>You are using the latest version!");
             return;
         }
         for(JsonElement version : versions){
