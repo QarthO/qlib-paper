@@ -13,6 +13,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class UpdateChecker {
     final private String slug;
@@ -65,7 +66,7 @@ public class UpdateChecker {
     }
 
     public void checkForUpdatesAsync(JavaPlugin plugin, String currentVersion){
-        Bukkit.getAsyncScheduler().runNow(plugin, scheduledTask -> checkForUpdates(currentVersion));
+        Bukkit.getAsyncScheduler().runDelayed(plugin, scheduledTask -> checkForUpdates(currentVersion), 1, TimeUnit.SECONDS);
     }
 
     public void checkForUpdates(String currentVersion){
