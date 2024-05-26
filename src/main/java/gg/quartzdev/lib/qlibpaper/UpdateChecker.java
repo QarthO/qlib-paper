@@ -4,9 +4,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -62,11 +68,17 @@ public class UpdateChecker {
         }
     }
 
-    public void checkForUpdatesAsync(JavaPlugin plugin, String currentVersion){
-        Bukkit.getAsyncScheduler().runDelayed(plugin, scheduledTask -> checkForUpdates(currentVersion), 1, TimeUnit.SECONDS);
+    /**
+     *  Checks for updates asynchronously
+     * @param plugin the instance of the plugin that will be used to run the async task
+     * @param currentVersion the current version of the plugin
+     * @param toNotify the {@link Player} to notify the results. The results will always be logged even if this is null
+     */
+    public void checkForUpdatesAsync(JavaPlugin plugin, String currentVersion, @Nullable Player toNotify){
+        Bukkit.getAsyncScheduler().runDelayed(plugin, scheduledTask -> checkForUpdates(currentVersion, toNotify), 1, TimeUnit.SECONDS);
     }
 
-    public void checkForUpdates(String currentVersion){
+    public void checkForUpdates(String currentVersion, Player notifier){
         QLogger.info(GenericMessages.UPDATE_CHECKING.get());
         JsonArray versions = getSupportedVersions();
         if(versions == null || versions.isEmpty()){
@@ -75,12 +87,11 @@ public class UpdateChecker {
         for(JsonElement version : versions){
             String versionString = version.getAsJsonObject().get("version_number").getAsString();
             if(compareVersionStrings(currentVersion, versionString) == -1){
-                QLogger.info(GenericMessages.UPDATE_AVAILABLE
-                        .parse("version", versionString)
-                        .get());
-                QLogger.info(GenericMessages.UPDATE_DOWNLOAD_URL
-                        .parse("download_url", modrinthDownloadURL(versionString))
-                        .get());
+                Audience audience = Audience.audience(notifier, Bukkit.getConsoleSender());
+                Sender.message(audience, GenericMessages.UPDATE_AVAILABLE
+                        .parse("version", versionString));
+                Sender.message(audience,GenericMessages.UPDATE_DOWNLOAD_URL
+                        .parse("download_url", modrinthDownloadURL(versionString)));
                 return;
             }
         }

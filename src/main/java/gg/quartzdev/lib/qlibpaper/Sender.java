@@ -27,6 +27,12 @@ public class Sender {
         sender.sendMessage(parse(message, !(sender instanceof Player)));
     }
 
+    public static void message(Audience audience, QMessage message){
+        if(message.get().isEmpty())
+            return;
+        audience.sendMessage(parse(message.get(), false));
+    }
+
     /**
      * Sends a Message to the player in chat
      * @param sender the {@link CommandSender} to send the message to
