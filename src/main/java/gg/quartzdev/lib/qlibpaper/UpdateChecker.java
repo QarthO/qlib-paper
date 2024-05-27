@@ -117,8 +117,16 @@ public class UpdateChecker {
             return -1;
         }
         // compare patch version
-        if(compareVersionPart(currentVersionParts[2], otherVersionParts[2]) == -1) {
+        String[] currentVersionPatch = currentVersionParts[2].split("-");
+        String[] otherVersionPatch = otherVersionParts[2].split("-");
+
+        int compareResult = compareVersionPart(currentVersionPatch[0], otherVersionPatch[0]);
+        if(compareResult == -1) {
             return -1;
+        }
+        // compare release channel if patch version is equal
+        if(compareResult == 0) {
+            return compareChannel(currentVersionPatch[1], otherVersionPatch[1]);
         }
         return 0;
     }
@@ -138,6 +146,26 @@ public class UpdateChecker {
         catch (NumberFormatException e){
             return 0;
         }
+    }
+
+    public int compareChannel(String currentChannel, String otherChannel){
+
+        // if current channel is release then we have the latest
+        // or the latest channel is an alpha
+        if(currentChannel.equalsIgnoreCase("release") || otherChannel.equalsIgnoreCase("alpha")){
+            return 1;
+        }
+
+        // if current channel is beta then we need to update if the other channel is release
+        if(currentChannel.equalsIgnoreCase("beta") && otherChannel.equalsIgnoreCase("release")){
+            return -1;
+        }
+
+        // if current channel is alpha then we need to update if the other channel is release or beta
+        if(currentChannel.equalsIgnoreCase("alpha") && (otherChannel.equalsIgnoreCase("release") || otherChannel.equalsIgnoreCase("beta"))){
+            return -1;
+        }
+        return 0;
     }
 }
 
