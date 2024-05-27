@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -105,67 +106,9 @@ public class UpdateChecker {
      * @return -1 if currentVersion is older than otherVersion, 0 if they are equal, 1 if currentVersion is newer than otherVersion
      */
     public int compareVersionStrings(String currentVersion, String otherVersion){
-        String[] currentVersionParts = currentVersion.split("\\.");
-        String[] otherVersionParts = otherVersion.split("\\.");
-
-        // compare major version
-        if(compareVersionPart(currentVersionParts[0], otherVersionParts[0]) == -1) {
-            return -1;
-        }
-        // compare minor version
-        if(compareVersionPart(currentVersionParts[1], otherVersionParts[1]) == -1) {
-            return -1;
-        }
-        // compare patch version
-        String[] currentVersionPatch = currentVersionParts[2].split("-");
-        String[] otherVersionPatch = otherVersionParts[2].split("-");
-
-        int compareResult = compareVersionPart(currentVersionPatch[0], otherVersionPatch[0]);
-        if(compareResult == -1) {
-            return -1;
-        }
-        // compare release channel if patch version is equal
-        if(compareResult == 0 && (currentVersionPatch.length > 1 && otherVersionPatch.length >1)) {
-            return compareChannel(currentVersionPatch[1], otherVersionPatch[1]);
-        }
-        return 0;
-    }
-
-    /**
-     * Compares individual parts of a version
-     * @param currentVersionPart the current version part
-     * @param otherVersionPart the version part you're comparing to
-     * @return -1 if current version part is older, 0 if current version part is equal, 1 if current version part is newer
-     */
-    public int compareVersionPart(String currentVersionPart, String otherVersionPart){
-        try {
-            int currentPart = Integer.parseInt(currentVersionPart);
-            int otherPart = Integer.parseInt(otherVersionPart);
-            return Integer.compare(currentPart, otherPart);
-        }
-        catch (NumberFormatException e){
-            return 0;
-        }
-    }
-
-    public int compareChannel(String currentChannel, String otherChannel){
-
-        // if current channel is release then we have the latest
-        // or the latest channel is an alpha
-        if(currentChannel.equalsIgnoreCase("release") || otherChannel.equalsIgnoreCase("alpha")){
-            return 1;
-        }
-
-        // if current channel is beta then we need to update if the other channel is release
-        if(currentChannel.equalsIgnoreCase("beta") && otherChannel.equalsIgnoreCase("release")){
-            return -1;
-        }
-
-        // if current channel is alpha then we need to update if the other channel is release or beta
-        if(currentChannel.equalsIgnoreCase("alpha") && (otherChannel.equalsIgnoreCase("release") || otherChannel.equalsIgnoreCase("beta"))){
-            return -1;
-        }
-        return 0;
+        ComparableVersion currentVersionComparable = new ComparableVersion(currentVersion);
+        ComparableVersion otherVersionComparable = new ComparableVersion(otherVersion);
+        return currentVersionComparable.compareTo(otherVersionComparable);
     }
 }
 
