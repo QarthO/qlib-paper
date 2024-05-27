@@ -4,16 +4,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
+import io.papermc.paper.threadedregions.scheduler.AsyncScheduler;
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.Component;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -70,7 +68,7 @@ public class UpdateChecker {
     }
 
     /**
-     *  Checks for updates asynchronously
+     *  Checks for updates asynchronously using Papers {@link AsyncScheduler}
      * @param plugin the instance of the plugin that will be used to run the async task
      * @param currentVersion the current version of the plugin
      * @param toNotify the {@link Player} to notify the results. The results will always be logged even if this is null
@@ -87,7 +85,7 @@ public class UpdateChecker {
         }
         for(JsonElement version : versions){
             String versionString = version.getAsJsonObject().get("version_number").getAsString();
-            if(compareVersionStrings(currentVersion, versionString) == -1){
+            if(compareVersionStrings(currentVersion, versionString) < 0){
                 Audience audience = toNotify == null ? Bukkit.getConsoleSender() : Audience.audience(toNotify, Bukkit.getConsoleSender());
                 Sender.message(audience, GenericMessages.UPDATE_AVAILABLE
                         .parse("version", versionString).get());
@@ -103,7 +101,7 @@ public class UpdateChecker {
      * Compares two version strings
      * @param currentVersion The current version
      * @param otherVersion   The version to compare to
-     * @return -1 if currentVersion is older than otherVersion, 0 if they are equal, 1 if currentVersion is newer than otherVersion
+     * @return less than zero if currentVersion is older than otherVersion, 0 if they are equal, greater than zero if currentVersion is newer than otherVersion
      */
     public int compareVersionStrings(String currentVersion, String otherVersion){
         ComparableVersion currentVersionComparable = new ComparableVersion(currentVersion);
