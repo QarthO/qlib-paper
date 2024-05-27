@@ -78,7 +78,7 @@ public class UpdateChecker {
         Bukkit.getAsyncScheduler().runDelayed(plugin, scheduledTask -> checkForUpdates(currentVersion, toNotify), 1, TimeUnit.SECONDS);
     }
 
-    public void checkForUpdates(String currentVersion, Player notifier){
+    public void checkForUpdates(String currentVersion, @Nullable Player toNotify){
         QLogger.info(GenericMessages.UPDATE_CHECKING.get());
         JsonArray versions = getSupportedVersions();
         if(versions == null || versions.isEmpty()){
@@ -87,7 +87,7 @@ public class UpdateChecker {
         for(JsonElement version : versions){
             String versionString = version.getAsJsonObject().get("version_number").getAsString();
             if(compareVersionStrings(currentVersion, versionString) == -1){
-                Audience audience = Audience.audience(notifier, Bukkit.getConsoleSender());
+                Audience audience = toNotify == null ? Bukkit.getConsoleSender() : Audience.audience(toNotify, Bukkit.getConsoleSender());
                 Sender.message(audience, GenericMessages.UPDATE_AVAILABLE
                         .parse("version", versionString));
                 Sender.message(audience,GenericMessages.UPDATE_DOWNLOAD_URL
