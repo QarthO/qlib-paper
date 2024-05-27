@@ -32,6 +32,11 @@ public class Sender {
             return;
         audience.sendMessage(parse(message.get(), false));
     }
+    public static void message(Audience audience, String message){
+        if(message.isEmpty())
+            return;
+        audience.sendMessage(parse(message, false));
+    }
 
     /**
      * Sends a Message to the player in chat
