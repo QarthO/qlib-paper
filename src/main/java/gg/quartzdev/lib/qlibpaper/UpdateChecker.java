@@ -125,7 +125,7 @@ public class UpdateChecker {
             return -1;
         }
         // compare release channel if patch version is equal
-        if(compareResult == 0) {
+        if(compareResult == 0 && (currentVersionPatch.length > 1 && otherVersionPatch.length >1)) {
             return compareChannel(currentVersionPatch[1], otherVersionPatch[1]);
         }
         return 0;
