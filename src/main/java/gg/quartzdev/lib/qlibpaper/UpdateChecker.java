@@ -89,9 +89,9 @@ public class UpdateChecker {
             if(compareVersionStrings(currentVersion, versionString) == -1){
                 Audience audience = toNotify == null ? Bukkit.getConsoleSender() : Audience.audience(toNotify, Bukkit.getConsoleSender());
                 Sender.message(audience, GenericMessages.UPDATE_AVAILABLE
-                        .parse("version", versionString));
+                        .parse("version", versionString).get());
                 Sender.message(audience,GenericMessages.UPDATE_DOWNLOAD_URL
-                        .parse("download_url", modrinthDownloadURL(versionString)));
+                        .parse("download_url", modrinthDownloadURL(versionString)).get());
                 return;
             }
         }
