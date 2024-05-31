@@ -12,7 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class CommandManager extends Command {
 
@@ -51,11 +54,20 @@ public class CommandManager extends Command {
     public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String labelOrAlias, String[] args) throws IllegalArgumentException {
         List<String> completions = new ArrayList<>();
 
-
+//        Only tab complete a sub command if the player has permission
         if(args.length == 1){
-            StringUtil.copyPartialMatches(args[0], subCommands.keySet(), completions);
+            Set<String> allowedSubCommands = new HashSet<>();
+            for (Map.Entry<String, QCommand> entry : subCommands.entrySet()) {
+                String commandName = entry.getKey();
+                QCommand cmd = entry.getValue();
+                if(cmd.hasPermission(sender)){
+                    allowedSubCommands.add(commandName);
+                }
+            }
+            StringUtil.copyPartialMatches(args[0], allowedSubCommands, completions);
         }
 
+//        Let  the subcommand handle tab completion
         if(args.length > 1){
             QCommand cmd = subCommands.get(args[0]);
 

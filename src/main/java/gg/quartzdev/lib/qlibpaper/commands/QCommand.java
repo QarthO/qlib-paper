@@ -44,7 +44,7 @@ public abstract class QCommand {
      * @param sender the sender to check if they have permission
      * @return if they have permission
      */
-    private boolean hasPermission(CommandSender sender){
+    public boolean hasPermission(CommandSender sender){
         return sender.hasPermission(permissionGroup) || sender.hasPermission(QPerm.COMMAND + commandName.toLowerCase());
     }
 

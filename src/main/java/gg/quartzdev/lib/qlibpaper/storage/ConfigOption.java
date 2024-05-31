@@ -1,8 +1,6 @@
 package gg.quartzdev.lib.qlibpaper.storage;
 
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ConfigOption<T> implements IConfigOption {
