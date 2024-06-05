@@ -1,25 +1,26 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
-import gg.quartzdev.lib.qlibpaper.QPerm;
 import gg.quartzdev.lib.qlibpaper.Sender;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.permissions.Permission;
 
 public abstract class QCommand {
 
     String commandName;
+    String commandPermission;
     String permissionGroup;
 
     /**
      *
      * @param commandName name of the command
+     * @param commandPermission permission required to run the command
      * @param permissionGroup permission group the command is in
      */
-    public QCommand(String commandName, String permissionGroup){
+    public QCommand(String commandName, String commandPermission, String permissionGroup){
         this.commandName = commandName;
+        this.commandPermission = commandPermission;
         this.permissionGroup = permissionGroup;
-
     }
 
     /**
@@ -45,7 +46,7 @@ public abstract class QCommand {
      * @return if they have permission
      */
     public boolean hasPermission(CommandSender sender){
-        return sender.hasPermission(permissionGroup) || sender.hasPermission(QPerm.COMMAND + commandName.toLowerCase());
+        return sender.hasPermission(permissionGroup) || sender.hasPermission(commandPermission);
     }
 
     /**
