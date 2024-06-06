@@ -1,5 +1,6 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
+import gg.quartzdev.lib.qlibpaper.QLogger;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import gg.quartzdev.lib.qlibpaper.Sender;
 import org.bukkit.Material;
@@ -21,6 +22,7 @@ public abstract class QCommand {
         this.commandName = commandName;
         this.commandPermission = commandPermission;
         this.permissionGroup = permissionGroup;
+        QLogger.info(this.getClass().getName().replaceFirst("CMD", ""));
     }
 
     /**
