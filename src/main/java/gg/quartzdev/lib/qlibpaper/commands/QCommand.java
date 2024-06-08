@@ -1,6 +1,7 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
 import gg.quartzdev.lib.qlibpaper.QLogger;
+import gg.quartzdev.lib.qlibpaper.QPluginAPI;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import gg.quartzdev.lib.qlibpaper.Sender;
 import org.bukkit.Material;
@@ -14,15 +15,13 @@ public abstract class QCommand {
 
     /**
      *
-     * @param commandName name of the command
-     * @param commandPermission permission required to run the command
+     * @param commandPermission the permission node required to run the command
      * @param permissionGroup permission group the command is in
      */
-    public QCommand(String commandName, String commandPermission, String permissionGroup){
-        this.commandName = commandName;
+    public QCommand(String commandPermission, String permissionGroup){
+        this.commandName = this.getClass().getSimpleName().replaceFirst("CMD", "");
         this.commandPermission = commandPermission;
         this.permissionGroup = permissionGroup;
-        QLogger.info(this.getClass().getName().replaceFirst("CMD", ""));
     }
 
     /**
