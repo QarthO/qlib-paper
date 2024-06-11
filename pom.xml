@@ -6,7 +6,7 @@
 
     <groupId>gg.quartzdev</groupId>
     <artifactId>qlib-paper</artifactId>
-    <version>1.0.0-BETA2</version>
+    <version>1.0.0-beta3</version>
     <packaging>jar</packaging>
 
     <name>qlib-paper</name>
