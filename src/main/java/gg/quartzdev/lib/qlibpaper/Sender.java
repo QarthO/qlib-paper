@@ -10,78 +10,62 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
- *  Easy way to send information to a player or console. All text messages supports MiniMessage format
+ *  Easy way to send information to a player or console. All messages support MiniMessage format
  */
 public class Sender {
-    /**
-     * Sends a message to the player in chat. If the message is empty, nothing is sent
-     * @param sender the {@link CommandSender} to send the message to
-     * @param message the message as a {@link String} to send supporting MiniMessage formatting
-     */
-    public static void message(CommandSender sender, String message){
-        if(message.isEmpty())
-            return;
-        sender.sendMessage(parse(message, !(sender instanceof Player)));
-    }
 
-    public static void message(Audience audience, QMessage message){
-        if(message.get().isEmpty())
-            return;
-        audience.sendMessage(parse(message.get(), false));
-    }
+    /**
+     * Sends a message to an audience in chat
+     * @param audience the audience to send the message to
+     * @param message the message to send
+     */
     public static void message(Audience audience, String message){
         if(message.isEmpty())
             return;
-        audience.sendMessage(parse(message, false));
+        audience.sendMessage(parse(message, audience instanceof ConsoleCommandSender));
     }
 
     /**
-     * Sends a Message to the player in chat
-     * @param sender the {@link CommandSender} to send the message to
-     * @param message the {@link QMessage} to send supporting MiniMessage formatting
+     * Sends a {@link QMessage} to an audience in chat. This just calls {@link #message(Audience, String)} by using {@link QMessage#get()}
+     * @param audience the audience to send the message to
+     * @param message the {@link QMessage} to send
      */
-    public static void message(CommandSender sender, QMessage message){
-        message(sender, message.get());
+    public static void message(Audience audience, QMessage message){
+        message(audience, message.get());
     }
 
     /**
-     * Sends a message to the player in chat
-     * @param player the {@link Player} to send the message to
-     * @param message the message to send
-     */
-    public static void message(Player player, QMessage message){
-        message(player, message.get());
-    }
-
-    /**
-     * Sends a message to the player in chat
-     * @param player the {@link Player} to send the message to
-     * @param message the message to send
-     */
-    public static void message(Player player, String message){
-        player.sendMessage(parse(message, false));
-
-    }
-
-    /**
-     * Sends an action bar to a player
-     * @param player the player to send the actionbar to
+     * Sends an action bar to an audience
+     * @param audience the audience to send the actionbar to
      * @param message the message to send supporting MiniMessage formatting
      */
-    public static void actionBar(Player player, String message){
-        player.sendActionBar(parse(message, false));
+    public static void actionBar(Audience audience, String message){
+        if(message.isEmpty()){
+            return;
+        }
+        audience.sendActionBar(parse(message, false));
     }
 
     /**
-     * Sends an action bar to a player
-     * @param player the player to send the actionbar to
+     * Sends an action bar to an audience. This just calls {@link #actionBar(Audience, String)} by using {@link QMessage#get()}
+     * @param audience the audience to send the actionbar to
      * @param message the {@link QMessage} to send supporting MiniMessage formatting
      */
-    public static void actionBar(Player player, QMessage message){
-        player.sendActionBar(parse(message.get(), false));
+    public static void actionBar(Audience audience, QMessage message){
+        actionBar(audience, message.get());
+    }
+
+    /**
+     * Sends a sound to an audience
+     * @param audience the audience to send the sound to
+     * @param sound the adventure {@link Sound} to send
+     */
+    public static void sound(Audience audience, Sound sound){
+        audience.playSound(sound);
     }
 
     /**
@@ -90,14 +74,22 @@ public class Sender {
      */
     public static void broadcast(String message){
 //        Sends a message to all online players
-        Audience.audience(Bukkit.getOnlinePlayers()).sendMessage(parse(message, false));
+        message(Audience.audience(Bukkit.getOnlinePlayers()), message);
 //        Sends a message to the consoles
         message(Bukkit.getConsoleSender(), message);
     }
 
     /**
+     * Broadcast a message to all online players including the console. This just calls {@link #broadcast(String)} by using {@link QMessage#get()}
+     * @param message the {@link QMessage} to send supporting MiniMessage formatting
+     */
+    public static void broadcast(QMessage message){
+        broadcast(message.get());
+    }
+
+    /**
      * Broadcast a sound to all online players, and logs it to the console
-     * @param sound the {@link Sound} to broadcast. The examinableName is what's logged to the console
+     * @param sound the adventure {@link Sound} to broadcast. The {@link Sound#examinableName()} is what's logged to the console
      */
     public static void broadcast(Sound sound){
         Audience.audience(Bukkit.getOnlinePlayers()).playSound(sound);
@@ -105,7 +97,7 @@ public class Sender {
     }
 
     /**
-     * Deserializes the message into a {@link Component} and parses any MiniMessage placeholders along the plugin <prefix>
+     * Deserializes the message into an adventure {@link Component} and parses any MiniMessage placeholders including the plugin <prefix>
      * @param message the message to parse
      * @param isConsole whether the <prefix> is replaced with the console or chat prefix
      * @return A MiniMessage deserialized chat {@link Component}
