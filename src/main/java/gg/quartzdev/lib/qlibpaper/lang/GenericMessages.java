@@ -24,6 +24,7 @@ public class GenericMessages {
 //   File
     public static final QMessage FILE_CREATE = new QMessage("<prefix> <green>Successfully created file: <yellow><file>");
     public static final QMessage ERROR_FILE_CREATE = new QMessage("<prefix> <red>Error creating file: <yellow><file>");
+    public static final QMessage ERROR_FILE_NOT_FOUND = new QMessage("<prefix> <red>File not found: <yellow><file>");
     public static final QMessage FILE_LOADING = new QMessage("<prefix> Loading file: <yellow><file>");
     public static final QMessage FILE_RELOAD = new QMessage( "<prefix> <green>Successfully reloaded file: <yellow><file>");
     public static final QMessage ERROR_RELOAD = new QMessage( "<prefix> <red>Error reloading file: <yellow><file>");
