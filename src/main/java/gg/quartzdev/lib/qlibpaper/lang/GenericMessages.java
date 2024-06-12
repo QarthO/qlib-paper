@@ -1,5 +1,6 @@
 package gg.quartzdev.lib.qlibpaper.lang;
 
+@SuppressWarnings("unused")
 public class GenericMessages {
 
     public static final QMessage CONSOLE_PREFIX = new QMessage( "[<red>q<aqua>Plugin<reset>]");
@@ -11,7 +12,7 @@ public class GenericMessages {
     }
 
     public static final QMessage PLUGIN_INFO = new QMessage( "<prefix> <green>Running version <gray><version>");
-    public static final QMessage PLUGIN_ENABLE = new QMessage( "<prefix> Enabling...");
+    public static final QMessage PLUGIN_ENABLE = new QMessage( "<prefix> Enabling <version>...");
     public static final QMessage PLUGIN_DISABLE = new QMessage( "<prefix> Disabling...");
     public static final QMessage ERROR_PLUGIN_ENABLE = new QMessage("<prefix> <red>Error: Plugin is already enabled. Most likely caused by using a plugin manager or an unsupported addon");
     public static final QMessage ERROR_NO_PERMISSION = new QMessage( "<prefix> <red>Error: You don't have permission to perform this");
