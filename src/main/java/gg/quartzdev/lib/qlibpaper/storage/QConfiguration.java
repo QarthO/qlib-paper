@@ -1,6 +1,5 @@
 package gg.quartzdev.lib.qlibpaper.storage;
 
-import gg.quartzdev.lib.qlibpaper.Sender;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
 import gg.quartzdev.lib.qlibpaper.QLogger;
@@ -12,23 +11,23 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.StringUtil;
-import org.codehaus.plexus.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.util.*;
 
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public abstract class QConfiguration {
     private final JavaPlugin plugin;
     private final String fileName;
     private final String filePath;
     private final boolean useSchema;
     private double schemaVersion = 1.0;
-    private final double minSupportedScema = 1.0;
-    private File file;
+    private final double minSupportedSchema = 1.0;
+    private final File file;
     protected YamlConfiguration yamlConfiguration;
     protected Set<ConfigOption<?>> options;
     public HashMap<String, ConfigOption<?>> configOptions;
@@ -36,7 +35,7 @@ public abstract class QConfiguration {
     public QConfiguration(JavaPlugin plugin, String fileName, boolean useSchema){
         this.plugin = plugin;
         this.fileName = fileName;
-        String fileSeparator = System.getProperty("file.separator");
+        String fileSeparator = FileSystems.getDefault().getSeparator();
         filePath =
                 plugin.getDataFolder().getPath() +
                 fileSeparator +
@@ -48,11 +47,10 @@ public abstract class QConfiguration {
         loadFile();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void setupDirectory(File directory){
         try{
-            if(directory.mkdirs()){
-//                QLogger.info(GenericMessages.FILE_CREATE.parse(QPlaceholder.FILE, directory.getPath() + " Directory"));
-            }
+            directory.mkdirs();
         } catch(SecurityException exception){
             QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", directory.getPath() + " Directory"));
         }
@@ -92,7 +90,7 @@ public abstract class QConfiguration {
             yamlConfiguration.set("config-version", schemaVersion);
         }
         loadSchemaVersion();
-        return schemaVersion >= minSupportedScema;
+        return schemaVersion >= minSupportedSchema;
     }
 
     public void save(){
@@ -138,7 +136,7 @@ public abstract class QConfiguration {
         }
 //        Convert to string and try parsing
         String rawData = data.toString();
-        Number number = null;
+        Number number;
         try {
             number = Double.parseDouble(rawData);
         } catch(NumberFormatException e1) {
@@ -211,10 +209,7 @@ public abstract class QConfiguration {
         List<World> worlds = new ArrayList<>();
         for(String worldName : getStringList(path)){
             World world = Bukkit.getWorld(worldName);
-            if(world == null){
-//                    logger.error(Language.ERROR_WORLD_NOT_FOUND.parse("world", worldName));
-            }
-            else {
+            if(world != null){
                 worlds.add(world);
             }
         }
@@ -249,8 +244,8 @@ public abstract class QConfiguration {
         for(String materialName : getStringList(path)){
             try {
                 materials.add(Material.valueOf(materialName));
-            } catch(IllegalArgumentException e){
-                continue;
+            } catch(IllegalArgumentException ignored){
+
             }
         }
         return materials;
