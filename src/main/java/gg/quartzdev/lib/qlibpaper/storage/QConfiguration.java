@@ -83,13 +83,13 @@ public abstract class QConfiguration {
         List<String> notes = new ArrayList<>();
         notes.add("Last loaded with " + plugin.getName() + " v" + plugin.getPluginMeta().getVersion());
 //        notes.add("Last loaded with " + QPlugin.getName() + " v" + QPlugin.getVersion());
-        yamlConfiguration.setComments("schema-version", notes);
+        yamlConfiguration.setComments("config-version", notes);
         save();
     }
 
     public boolean validateSchema(){
-        if(!yamlConfiguration.contains("schema-version")) {
-            yamlConfiguration.set("schema-version", schemaVersion);
+        if(!yamlConfiguration.contains("config-version")) {
+            yamlConfiguration.set("config-version", schemaVersion);
         }
         loadSchemaVersion();
         return schemaVersion >= minSupportedScema;
@@ -113,7 +113,7 @@ public abstract class QConfiguration {
     public abstract void saveAllData();
 
     public void loadSchemaVersion(){
-        this.schemaVersion = getNumber("schema-version").doubleValue();
+        this.schemaVersion = getNumber("config-version").doubleValue();
     }
 
     public double getSchema(){
