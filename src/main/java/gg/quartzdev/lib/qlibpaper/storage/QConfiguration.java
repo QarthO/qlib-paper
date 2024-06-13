@@ -66,7 +66,7 @@ public abstract class QConfiguration {
     /**
      * This will create the file if it doesn't exist
      * Then load the file into memory
-     * If the file use using a schema (config-version), it will validate the schema
+     * If the file is using a schema (config-version), it will validate the schema
      * Then it will stamp the file with the current version of the plugin (not schema)
      */
     private void loadFile() {
