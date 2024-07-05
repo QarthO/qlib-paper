@@ -1,8 +1,8 @@
 package gg.quartzdev.lib.qlibpaper.storage;
 
+import gg.quartzdev.lib.qlibpaper.QLogger;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
-import gg.quartzdev.lib.qlibpaper.QLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -23,7 +23,8 @@ import java.util.Map;
 import java.util.Set;
 
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
-public abstract class QConfiguration {
+public abstract class QConfiguration
+{
     private final JavaPlugin plugin;
     private final String fileName;
     private final String filePath;
@@ -35,14 +36,15 @@ public abstract class QConfiguration {
     protected Set<ConfigOption<?>> options;
     public HashMap<String, ConfigOption<?>> configOptions;
 
-    public QConfiguration(JavaPlugin plugin, String fileName, boolean useSchema){
+    public QConfiguration(JavaPlugin plugin, String fileName, boolean useSchema)
+    {
         this.plugin = plugin;
         this.fileName = fileName;
         String fileSeparator = FileSystems.getDefault().getSeparator();
         filePath =
                 plugin.getDataFolder().getPath() +
-                fileSeparator +
-                fileName.replaceAll("/", fileSeparator);
+                        fileSeparator +
+                        fileName.replaceAll("/", fileSeparator);
         file = new File(filePath);
         setupDirectory(file.getParentFile());
         configOptions = new HashMap<>();
@@ -52,13 +54,17 @@ public abstract class QConfiguration {
 
     /**
      * Creates the plugin data folder if it doesn't exist
+     *
      * @param directory the {@link File} (directory) to set up
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void setupDirectory(File directory){
-        try{
+    private void setupDirectory(File directory)
+    {
+        try
+        {
             directory.mkdirs();
-        } catch(SecurityException exception){
+        } catch (SecurityException exception)
+        {
             QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", directory.getPath() + " Directory"));
         }
     }
@@ -69,21 +75,27 @@ public abstract class QConfiguration {
      * If the file is using a schema (config-version), it will validate the schema
      * Then it will stamp the file with the current version of the plugin (not schema)
      */
-    private void loadFile() {
-        try {
-            if (file.createNewFile()) {
+    private void loadFile()
+    {
+        try
+        {
+            if (file.createNewFile())
+            {
                 plugin.saveResource(fileName, true);
                 QLogger.info(GenericMessages.FILE_CREATE.parse("file", fileName));
             }
             yamlConfiguration = YamlConfiguration.loadConfiguration(file);
-            if(!useSchema){
+            if (!useSchema)
+            {
                 return;
             }
-            if(!validateSchema()){
+            if (!validateSchema())
+            {
                 QLogger.info("Unsupported Config Schema... Reset your config");
             }
             stampFile();
-        } catch (IOException exception) {
+        } catch (IOException exception)
+        {
             QLogger.error(GenericMessages.ERROR_FILE_CREATE.parse("file", fileName));
             QLogger.error(exception.getMessage());
         }
@@ -93,9 +105,11 @@ public abstract class QConfiguration {
      * Updates the comments on the schema ('config-version') to show the last version of the plugin the config was loaded with
      */
     @SuppressWarnings("UnstableApiUsage")
-    public void stampFile(){
+    public void stampFile()
+    {
         List<String> notes = yamlConfiguration.getComments("config-version");
-        if(!notes.isEmpty()){
+        if (!notes.isEmpty())
+        {
             notes.remove(notes.size() - 1);
         }
         notes.add("Last loaded with " + plugin.getName() + " v" + plugin.getPluginMeta().getVersion());
@@ -106,10 +120,13 @@ public abstract class QConfiguration {
     /**
      * Validates the schema version of the config file
      * Note: Currently not implemented, but planned to auto-update the config to the latest schema version
+     *
      * @return true if the schema is supported, false otherwise
      */
-    public boolean validateSchema(){
-        if(!yamlConfiguration.contains("config-version")) {
+    public boolean validateSchema()
+    {
+        if (!yamlConfiguration.contains("config-version"))
+        {
             yamlConfiguration.set("config-version", schemaVersion);
         }
         loadSchemaVersion();
@@ -119,11 +136,14 @@ public abstract class QConfiguration {
     /**
      * Saves the config file
      */
-    public void save(){
+    public void save()
+    {
         saveAllData();
-        try {
+        try
+        {
             yamlConfiguration.save(file);
-        } catch(IOException exception){
+        } catch (IOException exception)
+        {
             QLogger.error(GenericMessages.ERROR_FILE_SAVE.parse(QPlaceholder.FILE, filePath));
         }
     }
@@ -131,7 +151,8 @@ public abstract class QConfiguration {
     /**
      * Reloads the config file
      */
-    public void reload(){
+    public void reload()
+    {
         loadFile();
         loadAllData();
     }
@@ -151,42 +172,54 @@ public abstract class QConfiguration {
     /**
      * Reads the schema ('config-version') from the config file
      */
-    public void loadSchemaVersion(){
+    public void loadSchemaVersion()
+    {
         this.schemaVersion = getNumber("config-version").doubleValue();
     }
 
     /**
      * Gets the schema ('config-version') from the config file
+     *
      * @return the schema
      */
-    public double getSchema(){
+    public double getSchema()
+    {
         return this.schemaVersion;
     }
 
     /**
      * Parses string
+     *
      * @param path - location in the config
      * @return - the {@link Number} that is represented by the string value found at the given path. Will will return a {@link Number} of value 0 if unable to parse the string.
      */
-    public @NotNull Number getNumber(String path){
+    public @NotNull Number getNumber(String path)
+    {
         Object data = yamlConfiguration.get(path);
 
 //       If data isn't found
-        if(data == null){
+        if (data == null)
+        {
             return 0;
         }
 //        Convert to string and try parsing
         String rawData = data.toString();
         Number number;
-        try {
+        try
+        {
             number = Double.parseDouble(rawData);
-        } catch(NumberFormatException e1) {
-            try {
+        } catch (NumberFormatException e1)
+        {
+            try
+            {
                 number = Integer.parseInt(rawData);
-            } catch(NumberFormatException e2) {
-                try {
+            } catch (NumberFormatException e2)
+            {
+                try
+                {
                     number = Long.parseLong(rawData);
-                } catch(NumberFormatException e3) {
+                } catch (NumberFormatException e3)
+                {
                     return 0;
                 }
             }
@@ -194,30 +227,39 @@ public abstract class QConfiguration {
         return number;
     }
 
-    public @Nullable EntityType getEntityType(String path){
+    public @Nullable EntityType getEntityType(String path)
+    {
         String entityTypeName = yamlConfiguration.getString(path);
         return getEntityTypeFromName(entityTypeName);
     }
 
-    private @Nullable EntityType getEntityTypeFromName(String name){
-        if(name != null)
-            try {
+    private @Nullable EntityType getEntityTypeFromName(String name)
+    {
+        if (name != null)
+            try
+            {
                 return EntityType.valueOf(name.toUpperCase());
-            } catch (IllegalArgumentException ignored){}
+            } catch (IllegalArgumentException ignored)
+            {
+            }
         return null;
     }
 
     /**
      * Gets a {@link List} of {@link World}s by world name at the given path in the configuration file.
      * Will always return a list. If no worlds are found, an empty list will be returned.
+     *
      * @param path the path in the configuration file
      * @return {@link List} of {@link World}s
      */
-    public @NotNull List<World> getWorldList(String path){
+    public @NotNull List<World> getWorldList(String path)
+    {
         List<World> worlds = new ArrayList<>();
-        for(String worldName : yamlConfiguration.getStringList(path)){
+        for (String worldName : yamlConfiguration.getStringList(path))
+        {
             World world = Bukkit.getWorld(worldName);
-            if(world != null){
+            if (world != null)
+            {
                 worlds.add(world);
             }
         }
@@ -226,10 +268,12 @@ public abstract class QConfiguration {
 
     /**
      * Gets a map of the base section containing all keys and values. Does the same as #getValues on {@link ConfigurationSection}
+     *
      * @param deep Whether to get a deep list, as opposed to a shallow list.
      * @return Map of keys and values of this section.
      */
-    public Map<String, Object> getValues(boolean deep){
+    public Map<String, Object> getValues(boolean deep)
+    {
         return yamlConfiguration.getValues(deep);
     }
 
@@ -238,36 +282,47 @@ public abstract class QConfiguration {
 
     /**
      * Used to get a {@link Material} from a {@link String}
+     *
      * @param name name of a material, case-insensitive
      * @return {@link Material} if found, null otherwise
      */
-    private @Nullable Material getMaterialFromName(String name){
-        if(name != null)
-            try {
+    private @Nullable Material getMaterialFromName(String name)
+    {
+        if (name != null)
+            try
+            {
                 return Material.valueOf(name.toUpperCase());
-            } catch (IllegalArgumentException ignored){}
+            } catch (IllegalArgumentException ignored)
+            {
+            }
         return null;
     }
 
     /**
      * Gets a {@link Material} at the given path in the configuration file.
+     *
      * @param path the path in the configuration file
      * @return {@link Material} if found, null otherwise
      */
-    public @Nullable Material getMaterial(String path){
+    public @Nullable Material getMaterial(String path)
+    {
         return getMaterialFromName(yamlConfiguration.getString(path));
     }
 
     /**
      * Gets a {@link List} of {@link Material}s at the given path in the configuration file.
+     *
      * @param path the path in the configuration file
      * @return {@link List} of {@link Material}s if found, null otherwise
      */
-    public @Nullable List<Material> getMaterialList(String path){
+    public @Nullable List<Material> getMaterialList(String path)
+    {
         List<Material> materials = new ArrayList<>();
-        for(String materialName : yamlConfiguration.getStringList(path)){
+        for (String materialName : yamlConfiguration.getStringList(path))
+        {
             final Material material = getMaterialFromName(materialName);
-            if(material != null){
+            if (material != null)
+            {
                 materials.add(material);
             }
         }

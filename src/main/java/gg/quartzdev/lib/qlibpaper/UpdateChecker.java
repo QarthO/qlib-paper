@@ -21,38 +21,46 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class UpdateChecker {
+public class UpdateChecker
+{
     final private String slug;
     final private String loader;
 
     /**
      * Creates a new update checker
-     * @param slug The modrinth slug
+     *
+     * @param slug   The modrinth slug
      * @param loader The loader
      */
-    public UpdateChecker(String slug, String loader){
+    public UpdateChecker(String slug, String loader)
+    {
         this.slug = slug;
         this.loader = loader;
     }
 
-    private String modrinthApiURL(){
+    private String modrinthApiURL()
+    {
         return "https://api.modrinth.com/v2/project/" + slug + "/version" +
                 "?game_versions=[" + URLEncoder.encode("\"" + Bukkit.getMinecraftVersion() + "\"", StandardCharsets.UTF_8) + "]" +
                 "&loaders=[" + URLEncoder.encode("\"" + loader + "\"", StandardCharsets.UTF_8) + "]";
     }
 
-    private String modrinthDownloadURL(String versionString){
+    private String modrinthDownloadURL(String versionString)
+    {
         return "https://modrinth.com/plugin/" + slug + "/version/" + versionString;
     }
 
-    private JsonArray getSupportedVersions(){
+    private JsonArray getSupportedVersions()
+    {
         String url = modrinthApiURL();
-        try {
+        try
+        {
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
             connection.setConnectTimeout(5000);
             connection.setRequestProperty("Accept-Charset", "UTF-8");
-            if(connection.getResponseCode() != HttpURLConnection.HTTP_OK){
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK)
+            {
                 throw new IOException("Invalid response code: " + connection.getResponseCode());
             }
             InputStream stream = connection.getInputStream();
@@ -60,7 +68,8 @@ public class UpdateChecker {
             String jsonAsString = scanner.nextLine();
             JsonElement json = JsonParser.parseString(jsonAsString);
             return json.getAsJsonArray();
-        } catch (final Exception e) {
+        } catch (final Exception e)
+        {
             QLogger.error(GenericMessages.ERROR_UPDATE_CHECK.get());
             QLogger.error(e.getMessage());
             return null;
@@ -68,28 +77,34 @@ public class UpdateChecker {
     }
 
     /**
-     *  Checks for updates asynchronously using Papers {@link AsyncScheduler}
-     * @param plugin the instance of the plugin that will be used to run the async task
+     * Checks for updates asynchronously using Papers {@link AsyncScheduler}
+     *
+     * @param plugin         the instance of the plugin that will be used to run the async task
      * @param currentVersion the current version of the plugin
-     * @param toNotify the {@link Player} to notify the results. The results will always be logged even if this is null
+     * @param toNotify       the {@link Player} to notify the results. The results will always be logged even if this is null
      */
-    public void checkForUpdatesAsync(JavaPlugin plugin, String currentVersion, @Nullable Player toNotify){
+    public void checkForUpdatesAsync(JavaPlugin plugin, String currentVersion, @Nullable Player toNotify)
+    {
         Bukkit.getAsyncScheduler().runDelayed(plugin, scheduledTask -> checkForUpdates(currentVersion, toNotify), 1, TimeUnit.SECONDS);
     }
 
-    public void checkForUpdates(String currentVersion, @Nullable Player toNotify){
+    public void checkForUpdates(String currentVersion, @Nullable Player toNotify)
+    {
         QLogger.info(GenericMessages.UPDATE_CHECKING.get());
         JsonArray versions = getSupportedVersions();
-        if(versions == null || versions.isEmpty()){
+        if (versions == null || versions.isEmpty())
+        {
             return;
         }
-        for(JsonElement version : versions){
+        for (JsonElement version : versions)
+        {
             String versionString = version.getAsJsonObject().get("version_number").getAsString();
-            if(compareVersionStrings(currentVersion, versionString) < 0){
+            if (compareVersionStrings(currentVersion, versionString) < 0)
+            {
                 Audience audience = toNotify == null ? Bukkit.getConsoleSender() : Audience.audience(toNotify, Bukkit.getConsoleSender());
                 Sender.message(audience, GenericMessages.UPDATE_AVAILABLE
                         .parse("version", versionString).get());
-                Sender.message(audience,GenericMessages.UPDATE_DOWNLOAD_URL
+                Sender.message(audience, GenericMessages.UPDATE_DOWNLOAD_URL
                         .parse("download_url", modrinthDownloadURL(versionString)).get());
                 return;
             }
@@ -99,11 +114,13 @@ public class UpdateChecker {
 
     /**
      * Compares two version strings
+     *
      * @param currentVersion The current version
      * @param otherVersion   The version to compare to
      * @return less than zero if currentVersion is older than otherVersion, 0 if they are equal, greater than zero if currentVersion is newer than otherVersion
      */
-    public int compareVersionStrings(String currentVersion, String otherVersion){
+    public int compareVersionStrings(String currentVersion, String otherVersion)
+    {
         ComparableVersion currentVersionComparable = new ComparableVersion(currentVersion);
         ComparableVersion otherVersionComparable = new ComparableVersion(otherVersion);
         return currentVersionComparable.compareTo(otherVersionComparable);

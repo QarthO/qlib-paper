@@ -1,6 +1,7 @@
 package gg.quartzdev.lib.qlibpaper.lang;
 
-public enum QPlaceholder {
+public enum QPlaceholder
+{
 
     FILE,
     WORLD,
@@ -8,11 +9,14 @@ public enum QPlaceholder {
     COMMAND,
     SOUND;
 
-    public String get(){
+    public String get()
+    {
         return "<" + this.name().toLowerCase() + ">";
     }
+
     @Override
-    public String toString(){
+    public String toString()
+    {
         return get();
     }
 

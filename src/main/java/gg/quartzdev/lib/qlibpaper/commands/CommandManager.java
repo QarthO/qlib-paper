@@ -1,8 +1,8 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
+import gg.quartzdev.lib.qlibpaper.Sender;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
-import gg.quartzdev.lib.qlibpaper.Sender;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,31 +17,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class CommandManager extends Command {
-
+public class CommandManager extends Command
+{
     HashMap<String, QCommand> subCommands;
-    public CommandManager(String name, @NotNull List<String> aliases){
+
+    public CommandManager(String name, @NotNull List<String> aliases)
+    {
         super(name);
         super.setAliases(aliases);
         subCommands = new HashMap<>();
         Bukkit.getCommandMap().register(name, this);
     }
 
-    public void add(String label, QCommand subCommand){
+    public void addSubCommand(String label, QCommand subCommand)
+    {
         subCommands.put(label, subCommand);
     }
 
     @Override
-    public boolean execute(@NotNull CommandSender sender, @NotNull String labelOrAlias, @NotNull String[] args) {
+    public boolean execute(@NotNull CommandSender sender, @NotNull String labelOrAlias, @NotNull String[] args)
+    {
 //        Send base command
-        if(args.length == 0){
+        if (args.length == 0)
+        {
             return subCommands.get("").run(sender, labelOrAlias, args);
         }
 
 //        Get subcommand from args
         QCommand cmd = subCommands.get(args[0]);
 
-        if(cmd == null){
+        if (cmd == null)
+        {
             Sender.message(sender, GenericMessages.CMD_NOT_FOUND.parse(QPlaceholder.COMMAND, args[0]));
             return false;
         }
@@ -51,16 +57,20 @@ public class CommandManager extends Command {
     }
 
     @Override
-    public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String labelOrAlias, String[] args) throws IllegalArgumentException {
+    public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String labelOrAlias, String[] args) throws IllegalArgumentException
+    {
         List<String> completions = new ArrayList<>();
 
 //        Only tab complete a sub command if the player has permission
-        if(args.length == 1){
+        if (args.length == 1)
+        {
             Set<String> allowedSubCommands = new HashSet<>();
-            for (Map.Entry<String, QCommand> entry : subCommands.entrySet()) {
+            for (Map.Entry<String, QCommand> entry : subCommands.entrySet())
+            {
                 String commandName = entry.getKey();
                 QCommand cmd = entry.getValue();
-                if(cmd.hasPermission(sender)){
+                if (cmd.hasPermission(sender))
+                {
                     allowedSubCommands.add(commandName);
                 }
             }
@@ -68,16 +78,19 @@ public class CommandManager extends Command {
         }
 
 //        Let  the subcommand handle tab completion
-        if(args.length > 1){
+        if (args.length > 1)
+        {
             QCommand cmd = subCommands.get(args[0]);
 
-            if(cmd == null) {
+            if (cmd == null)
+            {
                 return completions;
             }
 
             Iterable<String> rawCompletions = cmd.getTabCompletions(sender, args);
-            if(rawCompletions != null) {
-                StringUtil.copyPartialMatches(args[args.length-1], rawCompletions, completions);
+            if (rawCompletions != null)
+            {
+                StringUtil.copyPartialMatches(args[args.length - 1], rawCompletions, completions);
             }
         }
 

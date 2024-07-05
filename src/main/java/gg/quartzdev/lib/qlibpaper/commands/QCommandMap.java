@@ -1,53 +1,62 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
 import gg.quartzdev.lib.qlibpaper.QLogger;
+import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class QCommandMap {
+@SuppressWarnings("unused")
+public class QCommandMap
+{
 
-    private HashMap<String, CommandManager> commands;
+    private final HashMap<String, CommandManager> commands;
 
-    public QCommandMap(){
+    public QCommandMap()
+    {
         commands = new HashMap<>();
     }
 
     /**
      * creates a new command
-     * @param label command label
+     *
+     * @param label   command label
      * @param command command that is run if no arguments
      * @param aliases list of aliases for the command label
      */
-    public void create(String label, QCommand command, List<String> aliases){
-        if(commands.containsKey(label)){
-//            TODO: have it throw an exception instead of returning
-            QLogger.error("error: cmd alreayd exists");
+    public void create(String label, QCommand command, List<String> aliases)
+    {
+        if (commands.containsKey(label))
+        {
+            QLogger.error(GenericMessages.EXCEPTION_CMD_EXISTS.parse("command", label).get());
             return;
         }
         CommandManager commandManager = new CommandManager(label.toLowerCase(), aliases);
-        commandManager.add("", command);
+        commandManager.addSubCommand("", command);
 
         commands.put(label, commandManager);
     }
 
-    public void addSubCommand(String label, QCommand command){
-        CommandManager cm = commands.get(label);
-        if(cm == null){
-            QLogger.error("api error: command not found");
+    public void addSubCommand(String label, QCommand command)
+    {
+        CommandManager cmd = commands.get(label);
+        if (cmd == null)
+        {
+            QLogger.error(GenericMessages.ERROR_INTERNAL_API_EXCEPTION.get());
             return;
         }
-        cm.add(command.commandName, command);
+        cmd.addSubCommand(command.commandName, command);
     }
 
-    public void unregister(CommandManager command){
+    public void unregister(CommandManager command)
+    {
         command.unregister(Bukkit.getCommandMap());
     }
 
-    public void unregisterAll(){
+    public void unregisterAll()
+    {
         commands.values().forEach((this::unregister));
     }
-
 }
 
