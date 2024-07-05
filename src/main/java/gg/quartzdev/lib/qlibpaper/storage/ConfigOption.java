@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 
 public class ConfigOption<T> implements IConfigOption
 {
-    private String path;
-    private YamlConfiguration yamlConfiguration;
+    private final String path;
+    private final YamlConfiguration yamlConfiguration;
     private T value;
     private final Supplier<T> loader;
 
