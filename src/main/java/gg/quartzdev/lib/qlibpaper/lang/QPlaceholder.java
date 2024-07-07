@@ -1,13 +1,13 @@
 package gg.quartzdev.lib.qlibpaper.lang;
 
+@SuppressWarnings("unused")
 public enum QPlaceholder
 {
-
-    FILE,
-    WORLD,
-    PLAYER_NAME,
-    COMMAND,
-    SOUND;
+    FILE,       // <file> - The file name
+    WORLD,      // <world> - The world name
+    PLAYER,     // <player> - The player name
+    COMMAND,    // <command> - The command name
+    SOUND;      // <sound> - The sound name
 
     public String get()
     {
@@ -19,5 +19,4 @@ public enum QPlaceholder
     {
         return get();
     }
-
 }

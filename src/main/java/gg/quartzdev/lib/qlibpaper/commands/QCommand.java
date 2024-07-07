@@ -4,6 +4,7 @@ import gg.quartzdev.lib.qlibpaper.Sender;
 import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
 import org.bukkit.command.CommandSender;
 
+@SuppressWarnings("unused")
 public abstract class QCommand
 {
 

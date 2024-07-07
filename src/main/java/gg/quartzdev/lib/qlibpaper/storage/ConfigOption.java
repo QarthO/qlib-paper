@@ -4,6 +4,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("unused")
 public class ConfigOption<T> implements IConfigOption
 {
     private final String path;

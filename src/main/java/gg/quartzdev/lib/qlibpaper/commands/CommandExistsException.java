@@ -1,5 +1,6 @@
 package gg.quartzdev.lib.qlibpaper.commands;
 
+@SuppressWarnings("unused")
 public class CommandExistsException extends Exception
 {
     private CommandExistsException()
