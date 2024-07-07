@@ -14,6 +14,7 @@ import org.bukkit.command.ConsoleCommandSender;
 /**
  * Easy way to send information to a player or console. All messages support MiniMessage format
  */
+@SuppressWarnings("unused")
 public class Sender
 {
 
