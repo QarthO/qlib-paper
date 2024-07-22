@@ -9,8 +9,14 @@
 
 ### qlib-paper | A [Paper][paper-url] plugin library
 
-### **I don't ever recommend using this library. This is more just a fun little personal project to learn java and plugins for me. I'm certain it's not opitmized, and its doing things the completely wrong way. I recommend using existing libraries like Configurate for config/data files, and Cloud or CommandAPI for command handling*.
-That being said if you'd like to give me pointers or help feel free to create an issue or discussion post on the repo!
+---
+
+
+**Dislcaimer: I don't recommend using this library. This is personal project to help me learn Java and Paper API. I know this isn't optimized, and it's doing things incorrectly. This isn't supposed to be the best. 
+I recommend using libraries like Configurate, Cloud/CommandAPI or many of the other standard libraries.*
+
+That being said, if you'd like to give me any pointers... Make an issue or join me on [discord][discord-url]
+
 ---
 
 - Custom API for Commands
