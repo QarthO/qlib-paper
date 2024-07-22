@@ -7,13 +7,10 @@
 
 ---
 
-# qlib-paper [WIP]
+### qlib-paper | A [Paper][paper-url] plugin library
 
----
-
-### A [Paper][paper-url] plugin library
-### This is still heavily WIP and not fully functional yet
-
+### **I don't ever recommend using this library. This is more just a fun little personal project to learn java and plugins for me. I'm certain it's not opitmized, and its doing things the completely wrong way. I recommend using existing libraries like Configurate for config/data files, and Cloud or CommandAPI for command handling*.
+That being said if you'd like to give me pointers or help feel free to create an issue or discussion post on the repo!
 ---
 
 - Custom API for Commands
