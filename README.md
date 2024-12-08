@@ -7,12 +7,15 @@
 
 ---
 
-# qlib-paper [WIP]
+### qlib-paper | A [Paper][paper-url] plugin library
 
 ---
 
-### A [Paper][paper-url] plugin library
-### This is still heavily WIP and not fully functional yet
+
+**Disclaimer: I don't recommend using this library. This is personal project to help me learn Java and Paper API. I know this isn't optimized, and it's doing things incorrectly. This isn't supposed to be the best. 
+I recommend using libraries like Configurate, Cloud/CommandAPI or many of the other standard libraries.*
+
+That being said, if you'd like to give me any pointers... Make an issue or join me on [discord][discord-url]
 
 ---
 
