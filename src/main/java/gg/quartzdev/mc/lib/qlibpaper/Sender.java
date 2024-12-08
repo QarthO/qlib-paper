@@ -1,8 +1,8 @@
-package gg.quartzdev.lib.qlibpaper;
+package gg.quartzdev.mc.lib.qlibpaper;
 
-import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
-import gg.quartzdev.lib.qlibpaper.lang.QMessage;
-import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
+import gg.quartzdev.mc.lib.qlibpaper.lang.GenericMessages;
+import gg.quartzdev.mc.lib.qlibpaper.lang.QMessage;
+import gg.quartzdev.mc.lib.qlibpaper.lang.QPlaceholder;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;

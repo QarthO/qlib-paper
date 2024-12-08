@@ -1,4 +1,4 @@
-package gg.quartzdev.lib.qlibpaper.lang;
+package gg.quartzdev.mc.lib.qlibpaper.lang;
 
 @SuppressWarnings("unused")
 public class GenericMessages

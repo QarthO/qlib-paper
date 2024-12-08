@@ -1,7 +1,7 @@
-package gg.quartzdev.lib.qlibpaper.commands;
+package gg.quartzdev.mc.lib.qlibpaper.commands;
 
-import gg.quartzdev.lib.qlibpaper.QLogger;
-import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
+import gg.quartzdev.mc.lib.qlibpaper.QLogger;
+import gg.quartzdev.mc.lib.qlibpaper.lang.GenericMessages;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;

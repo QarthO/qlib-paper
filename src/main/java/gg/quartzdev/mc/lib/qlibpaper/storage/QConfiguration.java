@@ -1,8 +1,8 @@
-package gg.quartzdev.lib.qlibpaper.storage;
+package gg.quartzdev.mc.lib.qlibpaper.storage;
 
-import gg.quartzdev.lib.qlibpaper.QLogger;
-import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
-import gg.quartzdev.lib.qlibpaper.lang.QPlaceholder;
+import gg.quartzdev.mc.lib.qlibpaper.QLogger;
+import gg.quartzdev.mc.lib.qlibpaper.lang.GenericMessages;
+import gg.quartzdev.mc.lib.qlibpaper.lang.QPlaceholder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;

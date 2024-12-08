@@ -1,6 +1,6 @@
-package gg.quartzdev.lib.qlibpaper;
+package gg.quartzdev.mc.lib.qlibpaper;
 
-import gg.quartzdev.lib.qlibpaper.lang.QMessage;
+import gg.quartzdev.mc.lib.qlibpaper.lang.QMessage;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import net.kyori.adventure.text.minimessage.MiniMessage;

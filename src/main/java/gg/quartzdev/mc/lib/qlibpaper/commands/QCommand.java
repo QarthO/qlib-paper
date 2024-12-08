@@ -1,7 +1,7 @@
-package gg.quartzdev.lib.qlibpaper.commands;
+package gg.quartzdev.mc.lib.qlibpaper.commands;
 
-import gg.quartzdev.lib.qlibpaper.Sender;
-import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
+import gg.quartzdev.mc.lib.qlibpaper.Sender;
+import gg.quartzdev.mc.lib.qlibpaper.lang.GenericMessages;
 import org.bukkit.command.CommandSender;
 
 @SuppressWarnings("unused")

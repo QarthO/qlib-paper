@@ -1,9 +1,9 @@
-package gg.quartzdev.lib.qlibpaper;
+package gg.quartzdev.mc.lib.qlibpaper;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import gg.quartzdev.lib.qlibpaper.lang.GenericMessages;
+import gg.quartzdev.mc.lib.qlibpaper.lang.GenericMessages;
 import io.papermc.paper.threadedregions.scheduler.AsyncScheduler;
 import net.kyori.adventure.audience.Audience;
 import org.apache.maven.artifact.versioning.ComparableVersion;

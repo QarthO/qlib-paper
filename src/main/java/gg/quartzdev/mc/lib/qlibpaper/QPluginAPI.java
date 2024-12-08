@@ -1,4 +1,4 @@
-package gg.quartzdev.lib.qlibpaper;
+package gg.quartzdev.mc.lib.qlibpaper;
 
 public interface QPluginAPI
 {

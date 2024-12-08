@@ -1,4 +1,4 @@
-package gg.quartzdev.lib.qlibpaper.lang;
+package gg.quartzdev.mc.lib.qlibpaper.lang;
 
 public class QMessage
 {

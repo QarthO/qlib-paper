@@ -1,4 +1,4 @@
-package gg.quartzdev.lib.qlibpaper.storage;
+package gg.quartzdev.mc.lib.qlibpaper.storage;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
