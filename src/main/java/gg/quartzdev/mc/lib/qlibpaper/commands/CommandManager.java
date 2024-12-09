@@ -1,102 +1,47 @@
 package gg.quartzdev.mc.lib.qlibpaper.commands;
 
-import gg.quartzdev.mc.lib.qlibpaper.Sender;
-import gg.quartzdev.mc.lib.qlibpaper.lang.GenericMessages;
-import gg.quartzdev.mc.lib.qlibpaper.lang.QPlaceholder;
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.util.StringUtil;
-import org.jetbrains.annotations.NotNull;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-public class CommandManager extends Command
+public class CommandManager
 {
-    HashMap<String, QCommand> subCommands;
 
-    public CommandManager(String name, @NotNull List<String> aliases)
-    {
-        super(name);
-        super.setAliases(aliases);
-        subCommands = new HashMap<>();
-        Bukkit.getCommandMap().register(name, this);
+    private final HashMap<String, QCMD> commands = new HashMap<>();
+    private final JavaPlugin plugin;
+
+
+    public CommandManager(JavaPlugin plugin) {
+        this.plugin = plugin;
     }
 
-    public void addSubCommand(String label, QCommand subCommand)
-    {
-        subCommands.put(label, subCommand);
+    /**
+     * Adds a command along with its aliases. After adding all commands call {@link #registerCommands()} to register them.
+     * @param command the command to add
+     * @param aliases the aliases for the command
+     */
+    public void add(QCMD command, @Nullable Collection<String> aliases) {
+        if(aliases != null) command.aliases(aliases);
+        commands.put(command.label(), command);
     }
 
-    @Override
-    public boolean execute(@NotNull CommandSender sender, @NotNull String labelOrAlias, @NotNull String[] args)
-    {
-//        Send base command
-        if (args.length == 0)
-        {
-            return subCommands.get("").run(sender, labelOrAlias, args);
-        }
-
-//        Get subcommand from args
-        QCommand cmd = subCommands.get(args[0]);
-
-        if (cmd == null)
-        {
-            Sender.message(sender, GenericMessages.CMD_NOT_FOUND.parse(QPlaceholder.COMMAND, args[0]));
-            return false;
-        }
-
-//        Run the command
-        return cmd.run(sender, labelOrAlias, args);
-    }
-
-    @Override
-    public @NotNull List<String> tabComplete(@NotNull CommandSender sender, @NotNull String labelOrAlias, String[] args) throws IllegalArgumentException
-    {
-        List<String> completions = new ArrayList<>();
-
-//        Only tab complete a sub command if the player has permission
-        if (args.length == 1)
-        {
-            Set<String> allowedSubCommands = new HashSet<>();
-            for (Map.Entry<String, QCommand> entry : subCommands.entrySet())
-            {
-                String commandName = entry.getKey();
-                QCommand cmd = entry.getValue();
-                if (cmd.hasPermission(sender))
+    @SuppressWarnings("UnstableApiUsage")
+    public void registerCommands(){
+        plugin.getLifecycleManager().registerEventHandler(
+                LifecycleEvents.COMMANDS,
+                event ->
                 {
-                    allowedSubCommands.add(commandName);
+                    for(QCMD command : commands.values()){
+                        event.registrar().register(command.label(), command.description(), command.aliases(), command);
+                    }
                 }
-            }
-            StringUtil.copyPartialMatches(args[0], allowedSubCommands, completions);
-        }
-
-//        Let  the subcommand handle tab completion
-        if (args.length > 1)
-        {
-            QCommand cmd = subCommands.get(args[0]);
-
-            if (cmd == null)
-            {
-                return completions;
-            }
-
-            Iterable<String> rawCompletions = cmd.getTabCompletions(sender, args);
-            if (rawCompletions != null)
-            {
-                StringUtil.copyPartialMatches(args[args.length - 1], rawCompletions, completions);
-            }
-        }
-
-        Collections.sort(completions);
-        return completions;
+        );
     }
 
+    public void unregister(QCMD command) {
+        commands.remove(command.label());
+    }
 }
-
