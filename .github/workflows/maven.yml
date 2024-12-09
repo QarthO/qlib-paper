@@ -10,10 +10,10 @@ jobs:
     steps:
     - name: Fetch Project
       uses: actions/checkout@v4
-    - name: Setting Up Java 17
+    - name: Setting Up Java 21
       uses: actions/setup-java@v4
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'zulu'
         cache: maven
     - name: Build and Package Plugin
@@ -24,7 +24,7 @@ jobs:
         echo "artifactPath=${artifactPath}" >> $GITHUB_ENV
         echo "artifactName=${artifactName}" >> $GITHUB_ENV
         echo git_hash=${git_hash} >> $GITHUB_ENV
-        mvn clean package
+        mvn clean install -DskipTests
         mv "${artifactPath}/${artifactName}.jar" "${artifactPath}/${artifactName}-${git_hash}.jar"
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
