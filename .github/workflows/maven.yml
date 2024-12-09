@@ -26,8 +26,3 @@ jobs:
         echo git_hash=${git_hash} >> $GITHUB_ENV
         mvn clean install -DskipTests
         mv "${artifactPath}/${artifactName}.jar" "${artifactPath}/${artifactName}-${git_hash}.jar"
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ env.artifactName }}-${{ env.git_hash }}.jar
-        path: ${{ env.artifactPath }}/${{ env.artifactName }}-${{ env.git_hash }}.jar
